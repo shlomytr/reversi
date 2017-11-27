@@ -18,15 +18,10 @@ int main() {
     Player *black = &b;
     cout<< "hellopooo\n";
     Player w = HumanPlayer();
-    Player *white = &w;
     Board bo;
-    cout<< "hellopooo\n";
-    Board *board = &bo;
-    DefaultLogic l = DefaultLogic(board);
-    GameLogic *logic = &l;
-    Game game(board, black, white, logic);
+    DefaultLogic l = DefaultLogic(&bo);
+    Game game(&bo, &b, &w, &l);
     game.playGame();
-
 
     return 0;
 }
