@@ -27,6 +27,8 @@ public:
      **/
     Board();
 
+    Board (const Board &other);
+
     /**
      * @name : printBoard
      * @parameters : no parameters
@@ -81,7 +83,7 @@ public:
      * @return : the value of the cell in the board ('x' or 'o')
      **/
 
-    char getCell(int i, int j);
+    char getCell(int i, int j)const;
 
     /**
      * @name : getPosCell
@@ -89,7 +91,7 @@ public:
      * @return : the function returns true if a tile could be placed in the cell
      **/
 
-    bool getPosCell(int i, int j);
+    bool getPosCell(int i, int j)const;
 
     /**
      * @name : setCell

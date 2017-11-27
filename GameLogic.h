@@ -74,6 +74,10 @@ protected:
      **/
 
     void flipTile(bool blacksTurn, int i, int j);
+
+private:
+    bool GameLogic::getPosCell(int i, int j);
+
 };
 
 

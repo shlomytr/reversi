@@ -16,9 +16,11 @@ using namespace std;
 int main() {
     Player b = HumanPlayer();
     Player *black = &b;
+    cout<< "hellopooo\n";
     Player w = HumanPlayer();
     Player *white = &w;
     Board bo;
+    cout<< "hellopooo\n";
     Board *board = &bo;
     DefaultLogic l = DefaultLogic(board);
     GameLogic *logic = &l;

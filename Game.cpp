@@ -17,41 +17,49 @@ Game::Game(Board *board, Player *black, Player *white, GameLogic *logic) {
 
 void Game::playGame() {
 
+    int decision;
+    decision = chooseGameMode();
+
     // Pair of ints for the input of the next move of the player
 
     pair<int, int> nextMove;
 
     // In the first turn there should not be a message of last position
     bool notFirstTurn = false;
-    while (isGameNotOver()) {
-        printBoard();
-        if (blacksTurn) {
-            if (notFirstTurn)
+
+    if (decision ==1)
+    {
+        while (isGameNotOver()) {
+            printBoard();
+            if (blacksTurn) {
+                if (notFirstTurn)
+                    printLastMove(nextMove.first, nextMove.second);
+                notFirstTurn = true;
+                printNextTurn();
+                if (logic->possibleMoves(blacksTurn)) {
+                    black->setCanPlay(true);
+                    nextMove = enterNextMove();
+                    logic->move(blacksTurn, nextMove.first, nextMove.second);
+                } else {
+                    black->setCanPlay(false);
+                    printNoMoves();
+                }
+            } else {
                 printLastMove(nextMove.first, nextMove.second);
-            notFirstTurn = true;
-            printNextTurn();
-            if (logic->possibleMoves(blacksTurn)) {
-                black->setCanPlay(true);
-                nextMove = enterNextMove();
-                logic->move(blacksTurn, nextMove.first, nextMove.second);
-            } else {
-                black->setCanPlay(false);
-                printNoMoves();
+                printNextTurn();
+                if (logic->possibleMoves(blacksTurn)) {
+                    white->setCanPlay(true);
+                    nextMove = enterNextMove();
+                    logic->move(blacksTurn, nextMove.first, nextMove.second);
+                } else {
+                    white->setCanPlay(false);
+                    printNoMoves();
+                }
             }
-        } else {
-            printLastMove(nextMove.first, nextMove.second);
-            printNextTurn();
-            if (logic->possibleMoves(blacksTurn)) {
-                white->setCanPlay(true);
-                nextMove = enterNextMove();
-                logic->move(blacksTurn, nextMove.first, nextMove.second);
-            } else {
-                white->setCanPlay(false);
-                printNoMoves();
-            }
+            blacksTurn = !blacksTurn;
         }
-        blacksTurn = !blacksTurn;
     }
+
     printsWhoWon();
 }
 
@@ -116,6 +124,19 @@ pair<int, int> Game::enterNextMove() {
     }
     pair<int, int> ans = make_pair(row - 1, col - 1);
     return ans;
+}
+
+int Game::chooseGameMode() {
+    int ans;
+    cout << "Hello and welcome to Reversi!\nTo play against a human player please enter 1\n"
+            "To play against the computer please enter 2\n";
+    cin >> ans;
+    while (ans!= 1 && ans !=2){
+        cout << "Invalid choice, please try again\n";
+        cin >>ans;
+    }
+    return ans;
+
 }
 
 

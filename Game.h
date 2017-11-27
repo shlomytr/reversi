@@ -87,6 +87,7 @@ private:
 
     pair<int, int> enterNextMove();
 
+    int chooseGameMode();
 
 };
 

@@ -17,6 +17,15 @@ Board::Board() {
     array[3][4] = array[4][3] = 'x';
 }
 
+Board::Board(const Board &other) {
+    for (int i = 0; i < 8; i++)
+        for (int j = 0; j < 8; j++){
+            array[i][j]=other.getCell(i,j);
+            posArray[i][j] = other.getPosCell(i,j);
+        }
+
+}
+
 void Board::printBoard() {
     int row = 1;
     cout << " | ";
@@ -57,11 +66,11 @@ bool Board::isFull() {
 }
 
 
-char Board::getCell(int i, int j) {
+char Board::getCell(int i, int j)const {
     return array[i][j];
 }
 
-bool Board::getPosCell(int i, int j) {
+bool Board::getPosCell(int i, int j)const {
     return posArray[i][j];
 }
 
@@ -72,6 +81,8 @@ void Board::setPosCell(int i, int j, bool value) {
 void Board::setCell(int i, int j, char value) {
     array[i][j] = value;
 }
+
+
 
 
 
