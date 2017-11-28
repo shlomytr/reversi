@@ -4,20 +4,20 @@
 //
 
 #include <iostream>
-#include "Board.h"
-#include "Game.h"
-#include "HumanPlayer.h"
-#include "DeafultLogic.h"
+#include "include/Board.h"
+#include "include/Game.h"
+#include "include/HumanPlayer.h"
+#include "include/DeafultLogic.h"
 
 
 using namespace std;
 
 
 int main() {
-    Player b = HumanPlayer();
-    Player w = HumanPlayer();
     Board bo;
     DefaultLogic l = DefaultLogic(&bo);
+    HumanPlayer b = HumanPlayer(&l);
+    HumanPlayer w = HumanPlayer(&l);
     Game game(&bo, &b, &w, &l);
     game.playGame();
 

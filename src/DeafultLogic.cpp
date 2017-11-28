@@ -3,15 +3,12 @@
 // ID - 305626962
 //
 
-#include "DeafultLogic.h"
+#include "../include/DeafultLogic.h"
 
 DefaultLogic::DefaultLogic(Board *board) : GameLogic(board) {
 }
 
-
-
-
-bool DefaultLogic::possibleMoves(bool blacksTurn, int type) {
+bool DefaultLogic::possibleMoves(bool blacksTurn) {
     bool thereArePosMoves = false;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
@@ -30,12 +27,11 @@ bool DefaultLogic::possibleMoves(bool blacksTurn, int type) {
     }
     if (thereArePosMoves && type ==1){
         cout << "Your possible moves are: ";
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
-                if (board->getPosCell(i, j) == true)
-                    cout << "(" << i + 1 << "," << j + 1 << ") ";
-    }
-    if (thereArePosMoves && type==1)
+    for (int i = 0; i < 8; i++)
+        for (int j = 0; j < 8; j++)
+            if (board->getPosCell(i, j))
+                cout << "(" << i + 1 << "," << j + 1 << ") ";
+    if (thereArePosMoves)
         cout << endl;
     return thereArePosMoves;
 

@@ -3,8 +3,8 @@
 // ID - 305626962
 //
 
-#include "Game.h"
-#include "DeafultLogic.h"
+#include "../include/Game.h"
+
 
 
 using namespace std;
@@ -97,10 +97,10 @@ void Game::playGame() {
                                     nextMove.first=i;
                                     nextMove.second=j;
                                 }
-                                    
+
                             }
                     logic->move(blacksTurn, nextMove.first, nextMove.second);
-                    
+
                 }
 
             } else {
@@ -110,7 +110,6 @@ void Game::playGame() {
         }
         blacksTurn = !blacksTurn;
     }
-
 
     printsWhoWon();
 }

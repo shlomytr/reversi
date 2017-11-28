@@ -6,7 +6,7 @@
 #ifndef EX1_BOARD_H
 #define EX1_BOARD_H
 
-#include "Player.h"
+
 #include <iostream>
 
 using namespace std;

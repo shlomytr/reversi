@@ -3,7 +3,7 @@
 // ID - 305626962
 //
 
-#include "GameLogic.h"
+#include "../include/GameLogic.h"
 
 GameLogic::GameLogic(Board *board) {
     this->board = board;
@@ -57,6 +57,9 @@ void GameLogic::flipTile(bool blacksTurn, int i, int j) {
     }
 }
 
+bool GameLogic::getPosCell(int i, int j) {
+    return board->getPosCell(i,j);
+}
 
 
 
