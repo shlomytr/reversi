@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "Board.h"
+#include "../include/Board.h"
 
 
 Board::Board() {
@@ -81,20 +81,3 @@ void Board::setPosCell(int i, int j, bool value) {
 void Board::setCell(int i, int j, char value) {
     array[i][j] = value;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

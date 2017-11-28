@@ -3,7 +3,8 @@
 // ID - 305626962
 //
 
-#include "Game.h"
+#include "../include/Game.h"
+
 
 
 using namespace std;
@@ -33,24 +34,22 @@ void Game::playGame() {
             printBoard();
             if (blacksTurn) {
                 if (notFirstTurn)
-                    printLastMove(nextMove.first, nextMove.second);
+                    printLastMove(white->getLastMove().first, white->getLastMove().second);
                 notFirstTurn = true;
                 printNextTurn();
                 if (logic->possibleMoves(blacksTurn)) {
                     black->setCanPlay(true);
-                    nextMove = enterNextMove();
-                    logic->move(blacksTurn, nextMove.first, nextMove.second);
+                    black->playOneTurn(blacksTurn);
                 } else {
                     black->setCanPlay(false);
                     printNoMoves();
                 }
             } else {
-                printLastMove(nextMove.first, nextMove.second);
+                printLastMove(black->getLastMove().first, black->getLastMove().second);
                 printNextTurn();
                 if (logic->possibleMoves(blacksTurn)) {
                     white->setCanPlay(true);
-                    nextMove = enterNextMove();
-                    logic->move(blacksTurn, nextMove.first, nextMove.second);
+                    white->playOneTurn(blacksTurn);
                 } else {
                     white->setCanPlay(false);
                     printNoMoves();

@@ -3,9 +3,9 @@
 // ID - 305626962
 //
 
-#include "Player.h"
+#include "../include/Player.h"
 
-Player::Player() {
+Player::Player(GameLogic *l):logic(l){
     canPlay = true;
 }
 
@@ -16,4 +16,8 @@ bool Player::getCanPlay() {
 void Player::setCanPlay(bool b) {
     canPlay = b;
 
+}
+
+pair<int ,int > Player::getLastMove() {
+    return lastMove;
 }

@@ -7,9 +7,14 @@
 #define EX1_PLAYER_H
 
 
+#include "GameLogic.h"
+
 class Player {
 protected:
+    GameLogic *logic;
     bool canPlay;
+    pair<int, int> lastMove;
+
 public:
 
     /**
@@ -18,7 +23,7 @@ public:
     * @return : the function creates a new instance of player
     **/
 
-    Player();
+    Player(GameLogic *l);
 
     /**
     * @name : getCanPlay
@@ -35,6 +40,11 @@ public:
     **/
 
     void setCanPlay(bool b);
+
+    pair<int, int> getLastMove();
+
+    virtual void playOneTurn(bool blacksTurn) = 0;
+
 };
 
 

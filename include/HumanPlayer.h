@@ -18,8 +18,9 @@ public:
     * @return : the function creates a new instance of HumanPlayer
     **/
 
-    HumanPlayer();
+    HumanPlayer(GameLogic *gameLogic);
 
+    virtual void playOneTurn(bool myTurn);
 };
 
 
