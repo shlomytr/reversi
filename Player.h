@@ -10,6 +10,7 @@
 class Player {
 protected:
     bool canPlay;
+    int type;
 public:
 
     /**

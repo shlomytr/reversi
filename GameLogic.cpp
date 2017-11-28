@@ -57,9 +57,6 @@ void GameLogic::flipTile(bool blacksTurn, int i, int j) {
     }
 }
 
-bool GameLogic::getPosCell(int i, int j) {
-    return false;
-}
 
 
 

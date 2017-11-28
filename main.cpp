@@ -15,8 +15,6 @@ using namespace std;
 
 int main() {
     Player b = HumanPlayer();
-    Player *black = &b;
-    cout<< "hellopooo\n";
     Player w = HumanPlayer();
     Board bo;
     DefaultLogic l = DefaultLogic(&bo);
