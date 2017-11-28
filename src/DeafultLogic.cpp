@@ -8,7 +8,7 @@
 DefaultLogic::DefaultLogic(Board *board) : GameLogic(board) {
 }
 
-bool DefaultLogic::possibleMoves(bool blacksTurn) {
+bool DefaultLogic::possibleMoves(bool blacksTurn, int type) {
     bool thereArePosMoves = false;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
@@ -19,22 +19,25 @@ bool DefaultLogic::possibleMoves(bool blacksTurn) {
                 for (int rowDiff = -1; rowDiff < 2; rowDiff++)
                     for (int colDiff = -1; colDiff < 2; colDiff++)
                         if (rowDiff != 0 || colDiff != 0)
-                            if (!board->getPosCell(i, j) && checkAdTile(blacksTurn, i, j, rowDiff, colDiff, false)) {
+                            if (!board->getPosCell(i, j) &&
+                                checkAdTile(blacksTurn, i, j, rowDiff, colDiff,
+                                            false)) {
                                 board->setPosCell(i, j, true);
                                 thereArePosMoves = true;
                             }
         }
     }
-    if (thereArePosMoves && type ==1){
+    if (thereArePosMoves && type == 1) {
         cout << "Your possible moves are: ";
-    for (int i = 0; i < 8; i++)
-        for (int j = 0; j < 8; j++)
-            if (board->getPosCell(i, j))
-                cout << "(" << i + 1 << "," << j + 1 << ") ";
-    if (thereArePosMoves)
-        cout << endl;
-    return thereArePosMoves;
+        for (int i = 0; i < 8; i++)
+            for (int j = 0; j < 8; j++)
+                if (board->getPosCell(i, j))
+                    cout << "(" << i + 1 << "," << j + 1 << ") ";
+        if (thereArePosMoves)
+            cout << endl;
+        return thereArePosMoves;
 
+    }
 }
 
 

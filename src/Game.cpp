@@ -4,7 +4,7 @@
 //
 
 #include "../include/Game.h"
-
+#include "../include/DeafultLogic.h"
 
 
 using namespace std;
