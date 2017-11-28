@@ -7,5 +7,5 @@
 
 HumanPlayer::HumanPlayer() {
     this->canPlay = true;
-
+    this->type=1;
 }

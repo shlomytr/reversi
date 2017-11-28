@@ -25,7 +25,7 @@ bool DefaultLogic::possibleMoves(bool blacksTurn) {
                             }
         }
     }
-    if (thereArePosMoves)
+    if (thereArePosMoves && type ==1){
         cout << "Your possible moves are: ";
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++)
@@ -113,4 +113,9 @@ bool DefaultLogic::checkAdTile(bool blacksTurn, int i, int j, int rowDif, int co
     return false;
 
 }
+
+string DefaultLogic::getType() {
+    return "DefaultLogic";
+}
+
 

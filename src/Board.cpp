@@ -18,6 +18,8 @@ Board::Board() {
 }
 
 Board::Board(const Board &other) {
+    this->bTiles=other.bTiles;
+    this->wTiles=other.wTiles;
     for (int i = 0; i < 8; i++)
         for (int j = 0; j < 8; j++){
             array[i][j]=other.getCell(i,j);

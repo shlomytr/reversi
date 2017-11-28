@@ -28,35 +28,87 @@ void Game::playGame() {
     // In the first turn there should not be a message of last position
     bool notFirstTurn = false;
 
-    if (decision ==1)
-    {
-        while (isGameNotOver()) {
-            printBoard();
-            if (blacksTurn) {
-                if (notFirstTurn)
-                    printLastMove(white->getLastMove().first, white->getLastMove().second);
-                notFirstTurn = true;
-                printNextTurn();
-                if (logic->possibleMoves(blacksTurn)) {
-                    black->setCanPlay(true);
-                    black->playOneTurn(blacksTurn);
-                } else {
-                    black->setCanPlay(false);
-                    printNoMoves();
-                }
+    while (isGameNotOver()) {
+        printBoard();
+        if (blacksTurn) {
+            if (notFirstTurn)
+                printLastMove(nextMove.first, nextMove.second);
+            notFirstTurn = true;
+            printNextTurn();
+            if (logic->possibleMoves(blacksTurn,1)) {
+                black->setCanPlay(true);
+                nextMove = enterNextMove();
+                logic->move(blacksTurn, nextMove.first, nextMove.second);
             } else {
-                printLastMove(black->getLastMove().first, black->getLastMove().second);
-                printNextTurn();
-                if (logic->possibleMoves(blacksTurn)) {
-                    white->setCanPlay(true);
-                    white->playOneTurn(blacksTurn);
-                } else {
-                    white->setCanPlay(false);
-                    printNoMoves();
-                }
+                black->setCanPlay(false);
+                printNoMoves();
             }
-            blacksTurn = !blacksTurn;
+        } else {
+            printLastMove(nextMove.first, nextMove.second);
+            printNextTurn();
+            if (logic->possibleMoves(blacksTurn,1)) {
+                white->setCanPlay(true);
+                if (decision == 1) {
+                    nextMove = enterNextMove();
+                    logic->move(blacksTurn, nextMove.first, nextMove.second);
+                } else if (decision == 2) {
+                    // Finds every possible move for the AI
+                    bool flagFirstTime = true;
+                    int bestScore;
+                    int potentialScore = board->getWTiles() - board->getBTiles();
+                    for (int i = 0; i < 8; i++)
+                        for (int j = 0; j < 8; j++)
+                            if (board->getPosCell(i, j) == true) {
+                                // creating a copy of the original board so we can put the AI's move
+                                Board AIPossible = *board;
+                                GameLogic *AILogic = NULL;
+                                if (logic->getType() == "DefaultLogic")
+                                {
+                                    DefaultLogic ai = DefaultLogic(&AIPossible);
+                                    AILogic = &ai;
+                                }
+                                //making the change in the first copy of the board
+                                AILogic->move(blacksTurn, i, j);
+                                if (AILogic->possibleMoves(blacksTurn,2)) {
+                                    for (int k = 0; k < 8; k++)
+                                        for (int l = 0; l < 8; l++)
+                                            if (AIPossible.getPosCell(k, l) == true) {
+                                                Board humanAIPossible = AIPossible;
+                                                GameLogic *AIHumanLogic = NULL;
+                                                if (logic->getType() == "DefaultLogic"){
+                                                    DefaultLogic ai2 = DefaultLogic(&humanAIPossible);
+                                                    AIHumanLogic = &ai2;
+                                                }
+                                                AIHumanLogic->move(blacksTurn, k, l);
+                                                int checkScore =
+                                                        humanAIPossible.getWTiles() - humanAIPossible.getBTiles();
+                                                if (potentialScore < checkScore)
+                                                    potentialScore = checkScore;
+                                            }
+                                }
+                                if  (flagFirstTime){
+                                    bestScore=potentialScore;
+                                    flagFirstTime=false;
+                                    nextMove.first=i;
+                                    nextMove.second=j;
+                                }
+                                else if (bestScore<potentialScore){
+                                    bestScore=potentialScore;
+                                    nextMove.first=i;
+                                    nextMove.second=j;
+                                }
+
+                            }
+                    logic->move(blacksTurn, nextMove.first, nextMove.second);
+
+                }
+
+            } else {
+                white->setCanPlay(false);
+                printNoMoves();
+            }
         }
+        blacksTurn = !blacksTurn;
     }
 
     printsWhoWon();
@@ -130,9 +182,9 @@ int Game::chooseGameMode() {
     cout << "Hello and welcome to Reversi!\nTo play against a human player please enter 1\n"
             "To play against the computer please enter 2\n";
     cin >> ans;
-    while (ans!= 1 && ans !=2){
+    while (ans != 1 && ans != 2) {
         cout << "Invalid choice, please try again\n";
-        cin >>ans;
+        cin >> ans;
     }
     return ans;
 

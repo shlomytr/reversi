@@ -20,6 +20,7 @@ public:
 
     DefaultLogic(Board *board);
 
+
     /**
      * @name : possibleMoves
      * @parameters : true if it's the black's player turn, false otherwise
@@ -27,7 +28,10 @@ public:
      *           and returns true, otherwise returns false
      **/
 
-    virtual bool possibleMoves(bool blacksTurn);
+    virtual bool possibleMoves(bool blacksTurn, int type);
+
+    virtual string getType();
+
 
 protected:
 

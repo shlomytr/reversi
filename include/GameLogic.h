@@ -22,12 +22,12 @@ public:
 
     /**
      * @name : possibleMoves
-     * @parameters : true if it's the black's player turn, false otherwise
+     * @parameters : true if it's the black's player turn, false otherwise, and the type of the player (human,AI etc)
      * @return : if there are possible moves, the function prints them, puts them in the posArray
      *           and returns true, otherwise returns false
      **/
 
-    virtual bool possibleMoves(bool blacksTurn) = 0;
+    virtual bool possibleMoves(bool blacksTurn, int type) = 0;
 
     /**
      * @name : move
@@ -36,6 +36,8 @@ public:
      **/
 
     void move(bool blacksTurn, int i, int j);
+
+    virtual string getType() = 0;
 
 protected:
     Board *board;

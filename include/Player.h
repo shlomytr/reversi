@@ -13,6 +13,7 @@ class Player {
 protected:
     GameLogic *logic;
     bool canPlay;
+    int type;
     pair<int, int> lastMove;
 
 public:
