@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.8)
-project(ex1)
-
+project(reversi)
+add_subdirectory(lib/googletest-master)
+include_directories(lib/googletest-master/googletest/include)
 set(CMAKE_CXX_STANDARD 98)
-
-set(SOURCE_FILES main.cpp Board.cpp Board.h Player.cpp Game.cpp Game.h Player.h GameLogic.cpp GameLogic.h HumanPlayer.cpp HumanPlayer.h DeafultLogic.cpp DeafultLogic.h)
-add_executable(ex1 ${SOURCE_FILES})
+set(SOURCE_FILES src/Board.cpp src/DeafultLogic.cpp src/Game.cpp src/GameLogic.cpp src/HumanPlayer.cpp src/Player.cpp)
+set(TEST_FILES test/board_test.cpp)
+add_executable(runMain main.cpp ${SOURCE_FILES})
+add_executable(runUnitTests test/gtest_main.cpp ${TEST_FILES} ${SOURCE_FILES})
+target_link_libraries(runUnitTests gtest gtest_main)
+add_test(runUnitTests runUnitTests)
