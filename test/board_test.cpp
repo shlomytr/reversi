@@ -6,7 +6,7 @@
 #include "../include/Game.h"
 
 
-TEST(BoardTest, sanityCheak) {
+TEST(BoardTest, initializationCheak) {
     Board board;
     EXPECT_EQ(board.getBTiles(),2);
     EXPECT_EQ(board.getWTiles(),2);
@@ -14,6 +14,11 @@ TEST(BoardTest, sanityCheak) {
     EXPECT_EQ(board.getCell(3,4),'x');
     EXPECT_EQ(board.getCell(3,5),' ');
     ASSERT_FALSE(board.isFull());
+
+}
+
+TEST(BoardTest, boardAdgasments) {
+    Board board;
     board.setPosCell(3,3,true);
     board.setCell(1,1,'x');
     board.addToBTiles(1);
@@ -21,6 +26,3 @@ TEST(BoardTest, sanityCheak) {
     ASSERT_EQ(board.getCell(1,1),'x');
     EXPECT_EQ(board.getBTiles(),3);
 }
-
-//TEST(BoardTest, gameFlow) {
-//}

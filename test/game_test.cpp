@@ -7,6 +7,6 @@
 
 
 TEST(GameTest, sanityCheak) {
-
+    Game game();
     EXPECT_EQ(2,2);
 }
