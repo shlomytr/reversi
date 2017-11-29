@@ -13,6 +13,7 @@ Game::Game(Board *board, Player *black, Player *white, GameLogic *logic) {
     this->white = white;
     this->black = black;
     this->logic = logic;
+    blacksTurn=true;
 }
 
 void Game::playGame() {
@@ -28,7 +29,7 @@ void Game::playGame() {
                         .second);
             notFirstTurn = true;
             printNextTurn();
-            if (logic->possibleMoves(blacksTurn,black->getType())) {
+            if (logic->possibleMoves(blacksTurn,1)) {
                 black->setCanPlay(true);
                 black->playOneTurn(blacksTurn);
             } else {

@@ -18,8 +18,8 @@ void AIPlayer::playOneTurn(bool blacksTurn) {
     int bestScore;
     // the best score that the rival can get after the AI's turn. defaults to the current score
     int potentialScore;// = board->getWTiles() - board->getBTiles();
-    for (int i = 0; i < 8; i++)
-        for (int j = 0; j < 8; j++)
+    for (int i = 0; i < board->getBoardSize(); i++)
+        for (int j = 0; j < board->getBoardSize(); j++)
             if (board->getPosCell(i, j)) {
                 // boolean flag to indicate the first time checking a possible score for the rival
                 bool flagFirstTime1 = true;
@@ -35,8 +35,8 @@ void AIPlayer::playOneTurn(bool blacksTurn) {
                 AILogic->move(blacksTurn, i, j);
                 // check what the all possible moves of the human player
                 if (AILogic->possibleMoves(!blacksTurn, 2)) {
-                    for (int k = 0; k < 8; k++)
-                        for (int l = 0; l < 8; l++)
+                    for (int k = 0; k < board->getBoardSize(); k++)
+                        for (int l = 0; l < board->getBoardSize(); l++)
                             if (AIPossible.getPosCell(k, l)) {
                                 // creating a copy of the board after the potential move of the ai
                                 Board humanAIPossible = AIPossible;

@@ -9,11 +9,11 @@ DefaultLogic::DefaultLogic(Board *board) : GameLogic(board) {
 
 bool DefaultLogic::possibleMoves(bool blacksTurn, int type) {
     bool thereArePosMoves = false;
-    for (int i = 0; i < 8; i++)
-        for (int j = 0; j < 8; j++)
+    for (int i = 0; i < board->getBoardSize(); i++)
+        for (int j = 0; j < board->getBoardSize(); j++)
             board->setPosCell(i, j, false);
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
+    for (int i = 0; i < board->getBoardSize(); i++) {
+        for (int j = 0; j < board->getBoardSize(); j++) {
             if (board->getCell(i, j) == ' ')
                 for (int rowDiff = -1; rowDiff < 2; rowDiff++)
                     for (int colDiff = -1; colDiff < 2; colDiff++)
@@ -28,8 +28,8 @@ bool DefaultLogic::possibleMoves(bool blacksTurn, int type) {
     }
     if (thereArePosMoves && type == 1) {
         cout << "Your possible moves are: ";
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++)
+        for (int i = 0; i < board->getBoardSize(); i++)
+            for (int j = 0; j < board->getBoardSize(); j++)
                 if (board->getPosCell(i, j))
                     cout << "(" << i + 1 << "," << j + 1 << ") ";
     }

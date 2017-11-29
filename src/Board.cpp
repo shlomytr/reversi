@@ -9,11 +9,13 @@ using namespace std;
 
 
 Board::Board() {
-    for (int i = 0; i < 8; i++)
-        for (int j = 0; j < 8; j++)
+    wTiles=bTiles=2;
+    for (int i = 0; i < boardSize; i++)
+        for (int j = 0; j < boardSize; j++)
             array[i][j] = ' ';
-    array[3][3] = array[4][4] = 'o';
-    array[3][4] = array[4][3] = 'x';
+    const int mid = boardSize/2;
+    array[mid][mid] = array[mid-1][mid-1] = 'o';
+    array[mid-1][mid] = array[mid][mid-1] = 'x';
 }
 
 Board::Board(const Board &other) {
@@ -30,12 +32,12 @@ Board::Board(const Board &other) {
 void Board::printBoard() {
     int row = 1;
     cout << " | ";
-    for (int i = 1; i < 9; i++)
+    for (int i = 1; i < boardSize + 1; i++)
         cout << i << " | ";
     cout << "\n----------------------------------\n";
-    for (int i = 0; i < 8; i++, row++) {
+    for (int i = 0; i < boardSize; i++, row++) {
         cout << row << "| ";
-        for (int j = 0; j < 8; j++)
+        for (int j = 0; j < boardSize; j++)
             cout << array[i][j] << " | ";
         cout << "\n----------------------------------\n";
     }
@@ -59,8 +61,8 @@ void Board::addToWTiles(int i) {
 }
 
 bool Board::isFull() {
-    for (int i = 0; i < 8; i++)
-        for (int j = 0; j < 8; j++)
+    for (int i = 0; i < boardSize; i++)
+        for (int j = 0; j < boardSize; j++)
             if (array[i][j] == ' ')
                 return false;
     return true;
@@ -81,4 +83,8 @@ void Board::setPosCell(int i, int j, bool value) {
 
 void Board::setCell(int i, int j, char value) {
     array[i][j] = value;
+}
+
+int Board::getBoardSize() {
+    return boardSize;
 }

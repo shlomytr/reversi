@@ -28,7 +28,7 @@ private:
     Player *white;
     Board *board;
     GameLogic *logic;
-    bool blacksTurn = true;
+    bool blacksTurn;
 
     /**
      * @name : printNextTurn

@@ -13,9 +13,10 @@ using namespace std;
 
 class Board {
 protected:
-    int bTiles = 2, wTiles = 2;
-    char array[8][8];
-    bool posArray[8][8];
+    static const int boardSize= 8;
+    int bTiles  , wTiles ;
+    char array[boardSize][boardSize];
+    bool posArray[boardSize][boardSize];
 
 
 public:
@@ -113,6 +114,14 @@ public:
      **/
 
     void setPosCell(int i, int j, bool value);
+
+    /**
+     * @name : getBoardSize
+     * @parameters : no parameters
+     * @return : the function returns the size of the board
+     **/
+
+    int getBoardSize();
 
 };
 
