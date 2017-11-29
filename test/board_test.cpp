@@ -25,4 +25,8 @@ TEST(BoardTest, boardAdgasments) {
     ASSERT_TRUE(board.getPosCell(3,3));
     ASSERT_EQ(board.getCell(1,1),'x');
     EXPECT_EQ(board.getBTiles(),3);
+    for (int i = 0; i < board.getBoardSize(); i++)
+        for (int j = 0; j < board.getBoardSize(); j++)
+            board.setCell(i,j,'x');
+    ASSERT_TRUE(board.isFull());
 }
