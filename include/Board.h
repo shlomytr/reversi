@@ -1,6 +1,5 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #ifndef EX1_BOARD_H
@@ -29,8 +28,8 @@ public:
 
     /**
      * @name : Board (copy constructor)
-     * @parameters : no parameters
-     * @return : the function creates new instance of Board
+     * @parameters : A board object
+     * @return : the function creates new instance of Board and deep copy it from the parameter
      **/
 
     Board (const Board &other);

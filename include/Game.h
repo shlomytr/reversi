@@ -1,6 +1,5 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #ifndef EX1_GAME_H
@@ -18,7 +17,7 @@ public:
 
     /**
      * @name : Game
-     * @parameters : instances of the board, the players, and the game logic
+     * @parameters : instances of the board, the players, and the game's logic
      * @return : the function creates new instance of Game
      **/
 
@@ -72,22 +71,13 @@ private:
     bool isGameNotOver();
 
     /**
-     * @name : isGameNotOver
+     * @name : printsWhoWon
      * @parameters : no parameters
      * @return : the function prints the final score and who won
      **/
 
     void printsWhoWon();
 
-    /**
-     * @name : enterNextMove
-     * @parameters : no parameters
-     * @return : the function asks for the user for input of the next move, and when it is legal returns it
-     **/
-
-    pair<int, int> enterNextMove();
-
-    int chooseGameMode();
 
 };
 

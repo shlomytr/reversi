@@ -1,6 +1,5 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #include "../include/HumanPlayer.h"
@@ -10,7 +9,7 @@ HumanPlayer::HumanPlayer(GameLogic *logic1):Player(logic1){
     this->type=1;
 }
 
-void HumanPlayer::playOneTurn(bool myTurn) {
+void HumanPlayer::playOneTurn(bool blacksTurn) {
     cout << "Please enter your next move: row,col\n";
     int row, col;
     char dummy;
@@ -21,5 +20,5 @@ void HumanPlayer::playOneTurn(bool myTurn) {
     }
     lastMove.first = row - 1;
     lastMove.second = col - 1;
-    logic->move(myTurn, row -1, col - 1);
+    logic->move(blacksTurn, row -1, col - 1);
 }

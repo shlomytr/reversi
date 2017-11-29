@@ -1,6 +1,5 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #include "../include/Player.h"

@@ -1,6 +1,5 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #ifndef EX1_GAMELOGIC_H
@@ -37,7 +36,22 @@ public:
 
     void move(bool blacksTurn, int i, int j);
 
+    /**
+     * @name : getType
+     * @parameters : no parameters
+     * @return : the function returns a string with the name of the class
+     **/
+
     virtual string getType() = 0;
+
+    /**
+     * @name : getPosCell
+     * @parameters : the index of the cell that is required
+     * @return : the function returns whether we can put a tile in board[i][j]
+     **/
+
+    bool getPosCell(int i, int j);
+
 
 protected:
     Board *board;
@@ -76,9 +90,6 @@ protected:
      **/
 
     void flipTile(bool blacksTurn, int i, int j);
-
-public:
-    bool getPosCell(int i, int j);
 
 };
 

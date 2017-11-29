@@ -1,5 +1,5 @@
 //
-// Created by shlomy on 29/11/17.
+// Created by Shlomy and Omer
 //
 
 #ifndef REVERSI_AIPLAYER_H
@@ -12,9 +12,22 @@ class AIPlayer : public Player {
 protected:
     Board *board;
 public:
+
+    /**
+     * @name : AIPlayer
+     * @parameters : instances of GameLogic and Board
+     * @return : the function creates an instance of AIPlayer
+     **/
+
     AIPlayer(GameLogic *l, Board *board);
 
-    virtual void playOneTurn(bool myTurn);
+    /**
+     * @name : playOneTurn
+     * @parameters : true if it is the black's player turn, false otherwise
+     * @return : the function uses the minimax algorithem to play the next move of the computer
+     **/
+
+    virtual void playOneTurn(bool blacksTurn);
 
 };
 

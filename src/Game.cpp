@@ -1,10 +1,8 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #include "../include/Game.h"
-#include "../include/DeafultLogic.h"
 
 
 using namespace std;
@@ -19,10 +17,6 @@ Game::Game(Board *board, Player *black, Player *white, GameLogic *logic) {
 
 void Game::playGame() {
 
-
-    // Pair of ints for the input of the next move of the player
-
-
     // In the first turn there should not be a message of last position
     bool notFirstTurn = false;
 
@@ -34,7 +28,7 @@ void Game::playGame() {
                         .second);
             notFirstTurn = true;
             printNextTurn();
-            if (logic->possibleMoves(blacksTurn,1)) {
+            if (logic->possibleMoves(blacksTurn,black->getType())) {
                 black->setCanPlay(true);
                 black->playOneTurn(blacksTurn);
             } else {
@@ -44,7 +38,7 @@ void Game::playGame() {
         } else {
             printLastMove(black->getLastMove().first, black->getLastMove().second);
             printNextTurn();
-            if (logic->possibleMoves(blacksTurn,1)) {
+            if (logic->possibleMoves(blacksTurn,white->getType())) {
                 white->setCanPlay(true);
                 white->playOneTurn(blacksTurn);
             } else {
@@ -108,16 +102,5 @@ void Game::printBoard() {
     cout << "The score is: Black = " << board->getBTiles() << "\tWhite = " << board->getWTiles() << endl;
 }
 
-pair<int, int> Game::enterNextMove() {
-    cout << "Please enter your next move: row,col\n";
-    int row, col;
-    char dummy;
-    cin >> row >> dummy >> col;
-    while (board->getPosCell(row - 1, col - 1)) {
-        cout << "Invalid move, please enter a legal move: row,col\n";
-        cin >> row >> dummy >> col;
-    }
-    pair<int, int> ans = make_pair(row - 1, col - 1);
-    return ans;
-}
+
 

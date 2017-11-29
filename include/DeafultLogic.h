@@ -1,6 +1,5 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #ifndef EX1_DEAFULTLOGIC_H
@@ -29,6 +28,12 @@ public:
      **/
 
     virtual bool possibleMoves(bool blacksTurn, int type);
+
+    /**
+     * @name : getType
+     * @parameters : no parameters
+     * @return : the function returns the string "DeafultLogic"
+     **/
 
     virtual string getType();
 

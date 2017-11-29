@@ -1,6 +1,5 @@
 //
-// Created by Shlomy Trajber
-// ID - 305626962
+// Created by Shlomy and Omer
 //
 
 #ifndef EX1_PLAYER_H
@@ -42,9 +41,27 @@ public:
 
     void setCanPlay(bool b);
 
+    /**
+    * @name : getLastMove
+    * @parameters : no parameters
+    * @return : the function returns a pair with the index of the last move played
+    **/
+
     pair<int, int> getLastMove();
 
-   int getType();
+    /**
+    * @name : getType
+    * @parameters : no parameters
+    * @return : the function returns the type of the player (HumanPlayer, AIPlayer etc)
+    **/
+
+    int getType();
+
+    /**
+    * @name : playOneTurn
+    * @parameters : true if it's the black's player turn, false otherwise
+    * @return : the function makes a move in the game
+    **/
 
     virtual void playOneTurn(bool blacksTurn) = 0;
 
