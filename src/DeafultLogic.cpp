@@ -33,11 +33,12 @@ bool DefaultLogic::possibleMoves(bool blacksTurn, int type) {
             for (int j = 0; j < 8; j++)
                 if (board->getPosCell(i, j))
                     cout << "(" << i + 1 << "," << j + 1 << ") ";
+    }
         if (thereArePosMoves)
             cout << endl;
         return thereArePosMoves;
 
-    }
+
 }
 
 

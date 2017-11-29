@@ -27,6 +27,12 @@ public:
      **/
     Board();
 
+    /**
+     * @name : Board (copy constructor)
+     * @parameters : no parameters
+     * @return : the function creates new instance of Board
+     **/
+
     Board (const Board &other);
 
     /**

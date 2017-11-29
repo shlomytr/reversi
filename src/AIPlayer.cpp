@@ -28,7 +28,7 @@ void AIPlayer::playOneTurn(bool myTurn) {
                 }
                 //making the change in the first copy of the board
                 AILogic->move(myTurn, i, j);
-                if (AILogic->possibleMoves(myTurn, 2)) {
+                if (AILogic->possibleMoves(!myTurn, 2)) {
                     for (int k = 0; k < 8; k++)
                         for (int l = 0; l < 8; l++)
                             if (AIPossible.getPosCell(k, l)) {
@@ -38,11 +38,15 @@ void AIPlayer::playOneTurn(bool myTurn) {
                                     DefaultLogic ai2 = DefaultLogic(&humanAIPossible);
                                     AIHumanLogic = &ai2;
                                 }
-                                AIHumanLogic->move(myTurn, k, l);
-                                int checkScore =
-                                        humanAIPossible.getWTiles() - humanAIPossible.getBTiles();
+                                AIHumanLogic->move(!myTurn, k, l);
+                                int checkScore = humanAIPossible.getWTiles() - humanAIPossible.getBTiles();
+                                //cout<< "The check score is: "<<checkScore<<". The potential score is: "<<potentialScore<<endl;
                                 if (potentialScore < checkScore)
+                                {
+                                    //cout<<"before the change the score is "<<potentialScore<<".\n";
                                     potentialScore = checkScore;
+                                    //cout<<"now, after potential is "<<potentialScore<<".\n";
+                                }
                             }
                 }
                 if (flagFirstTime) {
