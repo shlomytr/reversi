@@ -32,25 +32,24 @@ void Game::playGame() {
         printBoard();
         if (blacksTurn) {
             if (notFirstTurn)
-                printLastMove(nextMove.first, nextMove.second);
+                printLastMove(white->getLastMove().first, white->getLastMove()
+                        .second);
             notFirstTurn = true;
             printNextTurn();
             if (logic->possibleMoves(blacksTurn,1)) {
                 black->setCanPlay(true);
-                nextMove = enterNextMove();
-                logic->move(blacksTurn, nextMove.first, nextMove.second);
+                black->playOneTurn(blacksTurn);
             } else {
                 black->setCanPlay(false);
                 printNoMoves();
             }
         } else {
-            printLastMove(nextMove.first, nextMove.second);
+            printLastMove(black->getLastMove().first, black->getLastMove().second);
             printNextTurn();
             if (logic->possibleMoves(blacksTurn,1)) {
                 white->setCanPlay(true);
                 if (decision == 1) {
-                    nextMove = enterNextMove();
-                    logic->move(blacksTurn, nextMove.first, nextMove.second);
+                    black->playOneTurn(blacksTurn);
                 } else if (decision == 2) {
                     // Finds every possible move for the AI
                     bool flagFirstTime = true;
@@ -58,7 +57,7 @@ void Game::playGame() {
                     int potentialScore = board->getWTiles() - board->getBTiles();
                     for (int i = 0; i < 8; i++)
                         for (int j = 0; j < 8; j++)
-                            if (board->getPosCell(i, j) == true) {
+                            if (board->getPosCell(i, j)) {
                                 // creating a copy of the original board so we can put the AI's move
                                 Board AIPossible = *board;
                                 GameLogic *AILogic = NULL;
@@ -72,7 +71,7 @@ void Game::playGame() {
                                 if (AILogic->possibleMoves(blacksTurn,2)) {
                                     for (int k = 0; k < 8; k++)
                                         for (int l = 0; l < 8; l++)
-                                            if (AIPossible.getPosCell(k, l) == true) {
+                                            if (AIPossible.getPosCell(k, l)) {
                                                 Board humanAIPossible = AIPossible;
                                                 GameLogic *AIHumanLogic = NULL;
                                                 if (logic->getType() == "DefaultLogic"){
@@ -92,7 +91,7 @@ void Game::playGame() {
                                     nextMove.first=i;
                                     nextMove.second=j;
                                 }
-                                else if (bestScore<potentialScore){
+                                else if (bestScore < potentialScore){
                                     bestScore=potentialScore;
                                     nextMove.first=i;
                                     nextMove.second=j;
@@ -169,7 +168,7 @@ pair<int, int> Game::enterNextMove() {
     int row, col;
     char dummy;
     cin >> row >> dummy >> col;
-    while (board->getPosCell(row - 1, col - 1) == false) {
+    while (board->getPosCell(row - 1, col - 1)) {
         cout << "Invalid move, please enter a legal move: row,col\n";
         cin >> row >> dummy >> col;
     }
@@ -189,9 +188,3 @@ int Game::chooseGameMode() {
     return ans;
 
 }
-
-
-
-
-
-
