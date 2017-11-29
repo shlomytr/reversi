@@ -6,12 +6,11 @@
 #include "../include/GameLogic.h"
 #include "../include/DeafultLogic.h"
 
-TEST(gameLogicTest, sanityCheak) {
+TEST(defaultLogicTest, sanityCheak) {
     Board board;
     DefaultLogic logic = DefaultLogic(&board);
     ASSERT_EQ(logic.getType(), "DefaultLogic");
     board.setPosCell(3,3,true);
     EXPECT_TRUE(logic.getPosCell(3,3));
     ASSERT_TRUE(logic.possibleMoves(true,1));
-//    logic.move()
 }
