@@ -7,6 +7,7 @@
 
 HumanPlayer::HumanPlayer(GameLogic *logic1):Player(logic1){
     this->canPlay = true;
+    this->type=1;
 }
 
 void HumanPlayer::playOneTurn(bool myTurn) {

@@ -9,6 +9,7 @@
 
 using namespace std;
 
+
 Game::Game(Board *board, Player *black, Player *white, GameLogic *logic) {
     this->board = board;
     this->black = black;
