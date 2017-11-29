@@ -21,3 +21,7 @@ void Player::setCanPlay(bool b) {
 pair<int ,int > Player::getLastMove() {
     return lastMove;
 }
+
+int Player::getType() {
+    return this->type;
+}

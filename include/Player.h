@@ -44,6 +44,8 @@ public:
 
     pair<int, int> getLastMove();
 
+   int getType();
+
     virtual void playOneTurn(bool blacksTurn) = 0;
 
 };
