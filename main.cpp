@@ -36,7 +36,7 @@ Player * chooseGameMode(GameLogic &l, Board &board) {
 
 
 int main() {
-    Board bo;
+    Board bo(8);
     DefaultLogic l = DefaultLogic(&bo);
     HumanPlayer b = HumanPlayer(&l);
     Player *w  = chooseGameMode(l,bo);

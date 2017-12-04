@@ -8,25 +8,56 @@ using namespace std;
 #include "../include/Board.h"
 
 
-Board::Board() {
+Board::Board(int size) {
+    boardSize = size;
     wTiles=bTiles=2;
+    arr = new Color *[boardSize];
+    posArray = new bool *[boardSize];
+    for (int i = 0; i < boardSize; i++)
+    {
+        arr[i] = new Color[boardSize];
+        posArray[i] = new bool [boardSize];
+    }
+
     for (int i = 0; i < boardSize; i++)
         for (int j = 0; j < boardSize; j++)
-            array[i][j] = ' ';
+            arr[i][j] = empty;
+
     const int mid = boardSize/2;
-    array[mid][mid] = array[mid-1][mid-1] = 'o';
-    array[mid-1][mid] = array[mid][mid-1] = 'x';
+    arr[mid][mid] = arr[mid-1][mid-1] = white;
+    arr[mid-1][mid] = arr[mid][mid-1] = black;
+}
+
+Board::~Board(){
+    for (int i = 0; i < boardSize; i++) {
+        delete[] arr[i];
+        delete[] posArray[i];
+    }
+    delete[] arr;
+    delete[] posArray;
 }
 
 Board::Board(const Board &other) {
+    boardSize = other.getBoardSize();
+    arr = new Color *[boardSize];
+    posArray = new bool *[boardSize];
+    for (int i = 0; i < boardSize; i++)
+    {
+        arr[i] = new Color[boardSize];
+        posArray[i] = new bool [boardSize];
+    }
     this->bTiles=other.bTiles;
     this->wTiles=other.wTiles;
-    for (int i = 0; i < 8; i++)
-        for (int j = 0; j < 8; j++){
-            array[i][j]=other.getCell(i,j);
+    for (int i = 0; i < boardSize; i++)
+        for (int j = 0; j < boardSize; j++){
+            if(other.getCell(i,j) == white)
+                arr[i][j] = white;
+            else if(other.getCell(i,j) == black)
+                arr[i][j] = black;
+            else
+                arr[i][j] = empty;
             posArray[i][j] = other.getPosCell(i,j);
         }
-
 }
 
 void Board::printBoard() {
@@ -38,7 +69,7 @@ void Board::printBoard() {
     for (int i = 0; i < boardSize; i++, row++) {
         cout << row << "| ";
         for (int j = 0; j < boardSize; j++)
-            cout << array[i][j] << " | ";
+            cout << (char)arr[i][j] << " | ";
         cout << "\n----------------------------------\n";
     }
 
@@ -63,14 +94,14 @@ void Board::addToWTiles(int i) {
 bool Board::isFull() {
     for (int i = 0; i < boardSize; i++)
         for (int j = 0; j < boardSize; j++)
-            if (array[i][j] == ' ')
+            if (arr[i][j] == empty)
                 return false;
     return true;
 }
 
 
 char Board::getCell(int i, int j)const {
-    return array[i][j];
+    return arr[i][j];
 }
 
 bool Board::getPosCell(int i, int j)const {
@@ -81,10 +112,10 @@ void Board::setPosCell(int i, int j, bool value) {
     posArray[i][j] = value;
 }
 
-void Board::setCell(int i, int j, char value) {
-    array[i][j] = value;
+void Board::setCell(int i, int j, Color value) {
+    arr[i][j] = value;
 }
 
-int Board::getBoardSize() {
+int Board::getBoardSize() const{
     return boardSize;
 }

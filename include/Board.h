@@ -12,20 +12,24 @@ using namespace std;
 
 
 class Board {
-protected:
-    static const int boardSize= 8;
-    int bTiles  , wTiles ;
-    char array[boardSize][boardSize];
-    bool posArray[boardSize][boardSize];
-
-
 public:
+
+    enum Color {
+        white = 'o', black = 'x', empty = ' '
+    };
+
+    /**
+     * @name : Board
+     * @parameters : size
+     * @return : the function creates new instance of Board in size of 'size'
+     **/
+    Board(int size);
     /**
      * @name : Board
      * @parameters : no parameters
-     * @return : the function creates new instance of Board
+     * @return : The board destructor.
      **/
-    Board();
+    ~Board();
 
     /**
      * @name : Board (copy constructor)
@@ -105,7 +109,7 @@ public:
      * @return : the function puts the value in the cell
      **/
 
-    void setCell(int i, int j, char value);
+    void setCell(int i, int j, Color value);
 
     /**
      * @name : setPosCell
@@ -121,8 +125,13 @@ public:
      * @return : the function returns the size of the board
      **/
 
-    int getBoardSize();
+    int getBoardSize() const;
 
+protected:
+    int boardSize;
+    int bTiles, wTiles ;
+    Color** arr;
+    bool** posArray;
 };
 
 

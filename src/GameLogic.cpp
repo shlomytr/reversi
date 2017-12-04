@@ -25,10 +25,10 @@ void GameLogic::move(bool blacksTurn, int row, int col) {
 void GameLogic::changeSingleTile(bool blacksTurn, int i, int j) {
     if (blacksTurn) {
         board->addToBTiles(1);
-        board->setCell(i, j, 'x');
+        board->setCell(i, j, board->black);
     } else {
         board->addToWTiles(1);
-        board->setCell(i, j, 'o');
+        board->setCell(i, j, board->white);
     }
 }
 
@@ -36,11 +36,11 @@ void GameLogic::flipTile(bool blacksTurn, int i, int j) {
     if (blacksTurn) {
         board->addToWTiles(-1);
         board->addToBTiles(1);
-        board->setCell(i, j, 'x');
+        board->setCell(i, j, board->black);
     } else {
         board->addToBTiles(-1);
         board->addToWTiles(1);
-        board->setCell(i, j, 'o');
+        board->setCell(i, j, board->white);
     }
 }
 
