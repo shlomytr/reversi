@@ -9,15 +9,17 @@
 #include "Player.h"
 
 class HumanPlayer : public Player {
+protected:
+    Printer *printer;
 public:
 
     /**
     * @name : HumanPlayer
-    * @parameters : an instance of GameLogic
+    * @parameters : instances of GameLogic and Printer
     * @return : the function creates a new instance of HumanPlayer
     **/
 
-    HumanPlayer(GameLogic *gameLogic);
+    HumanPlayer(GameLogic *gameLogic, Printer *printer);
 
     /**
      * @name : playOneTurn

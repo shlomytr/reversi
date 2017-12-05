@@ -33,8 +33,8 @@ void AIPlayer::playOneTurn(bool blacksTurn) {
                 }
                 // making the change in the first copy of the board
                 AILogic->move(blacksTurn, i, j);
-                // check what the all possible moves of the human player
-                if (AILogic->possibleMoves(!blacksTurn, 2)) {
+                // check what the all possible moves of the human player. sending null because we won't print the possible moves
+                if (AILogic->possibleMoves(!blacksTurn, getType(), NULL)) {
                     for (int k = 0; k < board->getBoardSize(); k++)
                         for (int l = 0; l < board->getBoardSize(); l++)
                             if (AIPossible.getPosCell(k, l)) {
@@ -48,8 +48,13 @@ void AIPlayer::playOneTurn(bool blacksTurn) {
                                 }
                                 // making the change in the humanPossible board
                                 AIHumanLogic->move(!blacksTurn, k, l);
-                                // put the score after the moves in a new integer
-                                int checkScore = humanAIPossible.getWTiles() - humanAIPossible.getBTiles();
+                                // put the score after the moves in a new integer.  if it is the white turn gets the
+                                // white-black score, otherwise gets black-white
+                                int checkScore;
+                                if (!blacksTurn)
+                                    checkScore = humanAIPossible.getWTiles() - humanAIPossible.getBTiles();
+                                else
+                                    checkScore = humanAIPossible.getBTiles() - humanAIPossible.getWTiles();
                                 // in the first time checking the possible move for the human, puts the current score
                                 // in potential score and puts the flagFirstTime1 false
                                 if (flagFirstTime1) {

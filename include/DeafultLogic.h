@@ -7,6 +7,7 @@
 
 
 #include "GameLogic.h"
+#include "Printer.h"
 
 class DefaultLogic : public GameLogic {
 public:
@@ -17,17 +18,18 @@ public:
      * @return : the function create an instance of DefaultLogic
      **/
 
-    DefaultLogic(Board *board);
+    explicit DefaultLogic(Board *board);
 
 
     /**
      * @name : possibleMoves
-     * @parameters : true if it's the black's player turn, false otherwise
+     * @parameters : true if it's the black's player turn, false otherwise,
+     * the type of the player and an instance of Printer
      * @return : if there are possible moves, the function prints them, puts them in the posArray
      *           and returns true, otherwise returns false
      **/
 
-    virtual bool possibleMoves(bool blacksTurn, int type);
+    virtual bool possibleMoves(bool blacksTurn, int type, Printer *printer);
 
     /**
      * @name : getType

@@ -9,11 +9,11 @@
 #include "Player.h"
 #include "Board.h"
 #include "GameLogic.h"
+#include "Printer.h"
 
 class Game {
 
 public:
-    void playGame();
 
     /**
      * @name : Game
@@ -21,13 +21,24 @@ public:
      * @return : the function creates new instance of Game
      **/
 
-    Game(Board *board, Player *black, Player *white, GameLogic *logic);
+    Game(Board *board, Player *black, Player *white, GameLogic *logic, Printer *printer);
+
+    /**
+     * @name : playGame
+     * @parameters : no parameters
+     * @return : the function runs the game
+     **/
+
+    void playGame();
+
+
 
 private:
     Player *black;
     Player *white;
     Board *board;
     GameLogic *logic;
+    Printer *printer;
     bool blacksTurn;
 
     /**
@@ -36,31 +47,6 @@ private:
      * @return : the function prints a message declaring who has the next turn
      **/
 
-    void printNextTurn();
-
-    /**
-     * @name : printNoMoves
-     * @parameters : no parameters
-     * @return : the function prints a message declaring that the player doesn't have possible moves
-     **/
-
-    void printNoMoves();
-
-    /**
-     * @name : printLastMove
-     * @parameters : the index of the last move that was played
-     * @return : the function prints a message declaring what was the last move that was played
-     **/
-
-    void printLastMove(int i, int j);
-
-    /**
-     * @name : printBoard
-     * @parameters : no parameters
-     * @return : the function prints the board
-     **/
-
-    void printBoard();
 
     /**
      * @name : isGameNotOver
@@ -70,13 +56,7 @@ private:
 
     bool isGameNotOver();
 
-    /**
-     * @name : printsWhoWon
-     * @parameters : no parameters
-     * @return : the function prints the final score and who won
-     **/
 
-    void printsWhoWon();
 
 
 };

@@ -7,6 +7,7 @@
 
 
 #include "Board.h"
+#include "Printer.h"
 
 class GameLogic {
 public:
@@ -17,16 +18,17 @@ public:
      * @return : the function create an instance of GameLogic
      **/
 
-    GameLogic(Board *board);
+    explicit GameLogic(Board *board);
 
     /**
      * @name : possibleMoves
-     * @parameters : true if it's the black's player turn, false otherwise, and the type of the player (human,AI etc)
+     * @parameters : true if it's the black's player turn, false otherwise,
+     * the type of the player and an instance of Printer
      * @return : if there are possible moves, the function prints them, puts them in the posArray
      *           and returns true, otherwise returns false
      **/
 
-    virtual bool possibleMoves(bool blacksTurn, int type) = 0;
+    virtual bool possibleMoves(bool blacksTurn, int type, Printer *printer) = 0;
 
     /**
      * @name : move

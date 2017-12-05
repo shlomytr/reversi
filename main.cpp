@@ -8,11 +8,12 @@
 #include "include/HumanPlayer.h"
 #include "include/DeafultLogic.h"
 #include "include/AIPlayer.h"
+#include "include/ConsolePrinter.h"
 
 
 using namespace std;
 
-Player * chooseGameMode(GameLogic &l, Board &board) {
+Player * chooseGameMode(GameLogic &l, Board &board, Printer &p) {
     int ans;
     cout << "Hello and welcome to Reversi!\nTo play against a human player please enter 1\n"
             "To play against the computer please enter 2\n";
@@ -22,7 +23,7 @@ Player * chooseGameMode(GameLogic &l, Board &board) {
         cin >> ans;
     }
         if (ans ==1){
-            Player *wh = new HumanPlayer(&l);
+            Player *wh = new HumanPlayer(&l,&p);
             return wh;
         }
         else if (ans ==2){
@@ -37,10 +38,11 @@ Player * chooseGameMode(GameLogic &l, Board &board) {
 
 int main() {
     Board bo(8);
+    ConsolePrinter p = ConsolePrinter();
     DefaultLogic l = DefaultLogic(&bo);
-    HumanPlayer b = HumanPlayer(&l);
-    Player *w  = chooseGameMode(l,bo);
-    Game game(&bo, &b, w, &l);
+    HumanPlayer b = HumanPlayer(&l,&p);
+    Player *w  = chooseGameMode(l,bo, p);
+    Game game(&bo, &b, w, &l, &p);
     game.playGame();
     delete(w);
     return 0;
