@@ -30,7 +30,7 @@ void Game::playGame() {
                         .second);
             notFirstTurn = true;
             printer->printNextTurn(blacksTurn);
-            if (logic->possibleMoves(blacksTurn,1,printer)) {
+            if (logic->possibleMoves(blacksTurn,black->getType(),printer)) {
                 black->setCanPlay(true);
                 black->playOneTurn(blacksTurn);
             } else {

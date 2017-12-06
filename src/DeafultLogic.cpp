@@ -36,7 +36,7 @@ bool DefaultLogic::possibleMoves(bool blacksTurn, int type, Printer *printer) {
 
 bool DefaultLogic::changeBoard(bool blacksTurn, int i, int j, int rowDif, int colDif, bool foundACandidate) {
     // There are no more tiles to check - The function will return false
-    if (i + rowDif > 7 || i + rowDif < 0 || j + colDif > 7 || j + colDif < 0)
+    if (i + rowDif > board->getBoardSize()-1 || i + rowDif < 0 || j + colDif > board->getBoardSize()-1 || j + colDif < 0)
         return false;
     if (blacksTurn) {
         // Black's turn - Reached a black tile. All the white tiles will flip
@@ -83,7 +83,7 @@ bool DefaultLogic::changeBoard(bool blacksTurn, int i, int j, int rowDif, int co
 
 bool DefaultLogic::checkAdTile(bool blacksTurn, int i, int j, int rowDif, int colDif, bool foundACandidate) {
     // There are no more tiles to check - The function will return false
-    if (i + rowDif > 7 || i + rowDif < 0 || j + colDif > 7 || j + colDif < 0)
+    if (i + rowDif > board->getBoardSize()-1 || i + rowDif < 0 || j + colDif > board->getBoardSize()-1 || j + colDif < 0)
         return false;
     if (blacksTurn) {
         // Black's turn - the function returns true

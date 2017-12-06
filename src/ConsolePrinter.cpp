@@ -29,7 +29,18 @@ void ConsolePrinter::printLastMove(bool blacksTurn, int i, int j) {
 
 void ConsolePrinter::printBoard(Board &b) {
     cout << "The current board:\n";
-    b.printBoard();
+    int row = 1;
+    string tmp(4*b.getBoardSize(),'-');
+    cout << " | ";
+    for (int i = 1; i < b.getBoardSize() + 1; i++)
+        cout << i << " | ";
+    cout << "\n"<<tmp<<"--"<<"\n";
+    for (int i = 0; i < b.getBoardSize(); i++, row++) {
+        cout << row << "| ";
+        for (int j = 0; j < b.getBoardSize(); j++)
+            cout << b.getCell(i,j) << " | ";
+        cout << "\n"<<tmp<<"--"<<"\n";
+    }
     cout << "The score is: Black = " << b.getBTiles() << "\tWhite = " << b.getWTiles() << endl;
 }
 
