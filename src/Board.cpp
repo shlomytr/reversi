@@ -64,15 +64,16 @@ Board::~Board(){
 
 void Board::printBoard() {
     int row = 1;
+    string tmp(4*boardSize,'-');
     cout << " | ";
     for (int i = 1; i < boardSize + 1; i++)
         cout << i << " | ";
-    cout << "\n----------------------------------\n";
+    cout << "\n"<<tmp<<"--"<<"\n";
     for (int i = 0; i < boardSize; i++, row++) {
         cout << row << "| ";
         for (int j = 0; j < boardSize; j++)
             cout << (char)arr[i][j] << " | ";
-        cout << "\n----------------------------------\n";
+        cout << "\n"<<tmp<<"--"<<"\n";
     }
 
 }
