@@ -21,20 +21,13 @@ Board::Board(int size) {
 
     for (int i = 0; i < boardSize; i++)
         for (int j = 0; j < boardSize; j++)
+        {
             arr[i][j] = empty;
+        }
 
     const int mid = boardSize/2;
     arr[mid][mid] = arr[mid-1][mid-1] = white;
     arr[mid-1][mid] = arr[mid][mid-1] = black;
-}
-
-Board::~Board(){
-    for (int i = 0; i < boardSize; i++) {
-        delete[] arr[i];
-        delete[] posArray[i];
-    }
-    delete[] arr;
-    delete[] posArray;
 }
 
 Board::Board(const Board &other) {
@@ -58,6 +51,15 @@ Board::Board(const Board &other) {
                 arr[i][j] = empty;
             posArray[i][j] = other.getPosCell(i,j);
         }
+}
+
+Board::~Board(){
+    for (int i = 0; i < boardSize; i++) {
+        delete[] arr[i];
+        delete[] posArray[i];
+    }
+    delete[] arr;
+    delete[] posArray;
 }
 
 void Board::printBoard() {
