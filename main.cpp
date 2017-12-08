@@ -10,11 +10,11 @@
 #include "include/DeafultLogic.h"
 #include "include/AIPlayer.h"
 #include "include/ConsolePrinter.h"
-#include "OnlinePlayer.h"
+#include "include/Client.h"
 
 
 using namespace std;
-/*
+
 
 Player * chooseGameMode(GameLogic &l, Board &board, Printer &p) {
     int ans;
@@ -33,6 +33,7 @@ Player * chooseGameMode(GameLogic &l, Board &board, Printer &p) {
             Player *wh = new AIPlayer(&l,&board);
             return wh;
         }
+            /*
         else if (ans == 3){
         //connect to server and gets 1 for black and 2 for white to x
             if (x==1){
@@ -44,7 +45,7 @@ Player * chooseGameMode(GameLogic &l, Board &board, Printer &p) {
                 LocalPlayer w = LocalPlayer(&l,&b);
             }
         }
-
+*/
 }
 
 
@@ -62,12 +63,12 @@ int main() {
     delete(w);
     return 0;
 }
- */
 
 
+/*
     using namespace std;
     int main() {
-        OnlinePlayer client("127.0.0.1", 8000);
+        Client client(NULL, "127.0.0.1", 8000);
         try {
             client.connectToServer();
         } catch (const char *msg) {
@@ -92,3 +93,4 @@ int main() {
             i++;
         }
     }
+*/

@@ -34,12 +34,12 @@ public:
     bool getCanPlay();
 
     /**
-    * @name : setCanPlay
-    * @parameters : true or false
-    * @return : the function sets whether the player has a possible move or not
+    * @name : DeclareNoMoves
+    * @parameters : no parameters
+    * @return : the function notify that the player can't play
     **/
 
-    void setCanPlay(bool b);
+    virtual void declareNoMoves();
 
     /**
     * @name : getLastMove
@@ -64,6 +64,7 @@ public:
     **/
 
     virtual void playOneTurn(bool blacksTurn) = 0;
+
 
 };
 

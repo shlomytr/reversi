@@ -2,16 +2,20 @@
 // Created by shlomy on 06/12/17.
 //
 
-#ifndef REVERSI_ONLINEPLAYER_H
-#define REVERSI_ONLINEPLAYER_H
+#ifndef REVERSI_CLIENT_H
+#define REVERSI_CLIENT_H
 
 
-class OnlinePlayer {
+#include "Player.h"
+
+class Client : public Player {
 public:
-    OnlinePlayer(const char *serverIP, int serverPort);
+    Client(GameLogic *l, const char *serverIP, int serverPort);
     void connectToServer();
     int sendExercise(int arg1, char op, int arg2);
-private:
+    virtual void playOneTurn(bool blacksTurn) = 0;
+
+protected:
     const char *serverIP;
     int serverPort;
     int clientSocket;

@@ -30,21 +30,19 @@ void Game::playGame() {
                         .second);
             notFirstTurn = true;
             printer->printNextTurn(blacksTurn);
-            if (logic->possibleMoves(blacksTurn,black->getType(),printer)) {
-                black->setCanPlay(true);
+            if (logic->possibleMoves(blacksTurn,black->getType(),printer))
                 black->playOneTurn(blacksTurn);
-            } else {
-                black->setCanPlay(false);
+             else {
+                black->declareNoMoves();
                 printer->printNoMoves();
             }
         } else {
             printer->printLastMove(blacksTurn, black->getLastMove().first, black->getLastMove().second);
             printer->printNextTurn(blacksTurn);
-            if (logic->possibleMoves(blacksTurn,white->getType(), printer)) {
-                white->setCanPlay(true);
+            if (logic->possibleMoves(blacksTurn,white->getType(), printer))
                 white->playOneTurn(blacksTurn);
-            } else {
-                white->setCanPlay(false);
+             else {
+                white->declareNoMoves();
                 printer->printNoMoves();
             }
         }

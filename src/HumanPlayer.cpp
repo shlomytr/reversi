@@ -12,6 +12,7 @@ HumanPlayer::HumanPlayer(GameLogic *logic1, Printer *printer):Player(logic1){
 }
 
 void HumanPlayer::playOneTurn(bool blacksTurn) {
+    this->canPlay=true;
     printer->printEnterNextTurn();
     int row, col;
     char dummy;

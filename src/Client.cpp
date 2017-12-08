@@ -2,8 +2,7 @@
 // Created by shlomy on 06/12/17.
 //
 
-#include "../include/OnlinePlayer.h"
-#include <iostream>
+#include "../include/Client.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -11,12 +10,11 @@
 #include <string.h>
 #include <unistd.h>
 using namespace std;
-OnlinePlayer::OnlinePlayer(const char *serverIP, int serverPort):
-        serverIP(serverIP), serverPort(serverPort),
-        clientSocket(0) {
+Client::Client(GameLogic *l, const char *serverIP, int serverPort) :
+        Player(l), serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
     cout << "Client" << endl;
 }
-void OnlinePlayer::connectToServer() {
+void Client::connectToServer() {
     // Create a socket point
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (clientSocket == -1) {
@@ -47,7 +45,7 @@ void OnlinePlayer::connectToServer() {
     }
     cout << "Connected to server" << endl;
 }
-int OnlinePlayer::sendExercise(int arg1, char op, int arg2) {
+int Client::sendExercise(int arg1, char op, int arg2) {
     // Write the exercise arguments to the socket
     int n = write(clientSocket, &arg1, sizeof(arg1));
     if (n == -1) {

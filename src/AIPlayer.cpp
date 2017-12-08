@@ -12,6 +12,7 @@ AIPlayer::AIPlayer(GameLogic *l, Board *board) : Player(l) {
 }
 
 void AIPlayer::playOneTurn(bool blacksTurn) {
+    this->canPlay=true;
     // boolean flag to indicate the first time copying the board
     bool flagFirstTime2 = true;
     // the minimum score that the rival can get after 2 moves

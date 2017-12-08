@@ -12,9 +12,8 @@ bool Player::getCanPlay() {
     return canPlay;
 }
 
-void Player::setCanPlay(bool b) {
-    canPlay = b;
-
+void Player::declareNoMoves() {
+    canPlay = false;
 }
 
 pair<int ,int > Player::getLastMove() {
