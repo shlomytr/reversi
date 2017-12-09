@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <unistd.h>
 #include "include/Board.h"
 #include "include/Game.h"
 #include "include/HumanPlayer.h"
@@ -11,56 +12,81 @@
 #include "include/AIPlayer.h"
 #include "include/ConsolePrinter.h"
 #include "include/Client.h"
+#include "include/LocalPlayer.h"
+#include "include/RemotePlayer.h"
 
 
 using namespace std;
 
 
-Player * chooseGameMode(GameLogic &l, Board &board, Printer &p) {
+pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p, Client &c, HumanPlayer &h) {
     int ans;
+    pair<Player *, Player *> players;
     cout << "Hello and welcome to Reversi!\nTo play against a human player please enter 1\n"
-            "To play against the computer please enter 2\n";
+            "To play against the computer please enter 2\nTo play against an online player please enter 3\n";
     cin >> ans;
-    while (ans != 1 && ans != 2) {
+    while (ans != 1 && ans != 2 && ans!=3) {
         cout << "Invalid choice, please try again\n";
         cin >> ans;
     }
         if (ans ==1){
             Player *wh = new HumanPlayer(&l,&p);
-            return wh;
+            players = make_pair(&h,wh);
         }
         else if (ans ==2){
             Player *wh = new AIPlayer(&l,&board);
-            return wh;
+            players = make_pair(&h,wh);
         }
-            /*
+
         else if (ans == 3){
-        //connect to server and gets 1 for black and 2 for white to x
-            if (x==1){
-                LocalPlayer b = LocalPlayer(&l,&b);
-                RemotePlayer w = RemotePlayer(&l,&b);
+            try {
+                c.connectToServer();
+            } catch (const char *msg) {
+                cout << "Failed to connect to server. Reason:" << msg << endl;
+                exit(-1);
             }
-            if (x==2){
-                RemotePlayer b = RemotePlayer(&l,&b);
-                LocalPlayer w = LocalPlayer(&l,&b);
+            cout<<"Waiting for the other player to connect...\n";
+            int order;
+        //connect to server and gets 1 for black and 2 for white into order
+            int n = read(c.getClientSocket(), &order, sizeof(int));
+            if(n == -1) {
+                cout << "Error reading the turn of the player";
+                exit (-1);
+            }
+            if (order==1){
+                LocalPlayer *b = new LocalPlayer(&l,&h,&c);
+                RemotePlayer *w = new RemotePlayer(&l,&c);
+                players.first=b;
+                players.second=w;
+            }
+            if (order==2){
+                RemotePlayer *b =new RemotePlayer(&l,&c);
+                LocalPlayer *w =new LocalPlayer(&l,&h,&c);
+                players.first=b;
+                players.second=w;
             }
         }
-*/
+    return players;
+
 }
 
 
 
 
 int main() {
-    Board bo(8);
-    ConsolePrinter p = ConsolePrinter();
 
-    DefaultLogic l = DefaultLogic(&bo);
-    HumanPlayer b = HumanPlayer(&l,&p);
-    Player *w  = chooseGameMode(l,bo, p);
-    Game game(&bo, &b, w, &l, &p);
+    Board board(8);
+    ConsolePrinter printer = ConsolePrinter();
+    Client client("127.0.0.1", 8000);
+    DefaultLogic logic = DefaultLogic(&board);
+    HumanPlayer *humanPlayer = new HumanPlayer(&logic,&printer);
+           // HumanPlayer(&logic,&printer);
+    pair <Player *, Player *> players = chooseGameMode(logic,board, printer, client,*humanPlayer);
+    Game game(&board, players.first, players.second, &logic, &printer);
     game.playGame();
-    delete(w);
+    delete(players.first);
+    delete(players.second);
+    delete(humanPlayer);
     return 0;
 }
 

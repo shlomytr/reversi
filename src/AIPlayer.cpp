@@ -83,3 +83,5 @@ void AIPlayer::playOneTurn(bool blacksTurn) {
 
 
 }
+
+void AIPlayer::onlineEnd() {}

@@ -34,3 +34,5 @@ void HumanPlayer::playOneTurn(bool blacksTurn) {
     lastMove.second = col - 1;
     logic->move(blacksTurn, row -1, col - 1);
 }
+
+void HumanPlayer::onlineEnd() {}

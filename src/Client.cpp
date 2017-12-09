@@ -10,9 +10,9 @@
 #include <string.h>
 #include <unistd.h>
 using namespace std;
-Client::Client(GameLogic *l, const char *serverIP, int serverPort) :
-        Player(l), serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
-    cout << "Client" << endl;
+Client::Client(const char *serverIP, int serverPort) :
+         serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
+    //cout << "Client" << endl;
 }
 void Client::connectToServer() {
     // Create a socket point
@@ -44,26 +44,10 @@ void Client::connectToServer() {
         throw "Error connecting to server";
     }
     cout << "Connected to server" << endl;
+
 }
-int Client::sendExercise(int arg1, char op, int arg2) {
-    // Write the exercise arguments to the socket
-    int n = write(clientSocket, &arg1, sizeof(arg1));
-    if (n == -1) {
-        throw "Error writing arg1 to socket";
-    }
-    n = write(clientSocket, &op, sizeof(op));
-    if (n == -1) {
-        throw "Error writing op to socket";
-    }
-    n = write(clientSocket, &arg2, sizeof(arg2));
-    if (n == -1) {
-        throw "Error writing arg2 to socket";
-    }
-    // Read the result from the server
-    int result;
-    n = read(clientSocket, &result, sizeof(result));
-    if (n == -1) {
-        throw "Error reading result from socket";
-    }
-    return result;
+
+
+int Client::getClientSocket() {
+    return clientSocket;
 }

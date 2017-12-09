@@ -8,9 +8,10 @@
 
 #include "Client.h"
 
-class RemotePlayer : Client {
+class RemotePlayer : public Player {
 public:
-    RemotePlayer(GameLogic *l, const char *serverIP, int serverPort);
+
+    RemotePlayer( GameLogic *l, Client *client);
 
     virtual void playOneTurn(bool blacksTurn);
 
@@ -20,8 +21,13 @@ public:
     * @return : the function notify that the player can't play
     **/
 
-    virtual void declareNoMoves();
+    virtual void onlineEnd();
+
+protected:
+    Client *client;
 };
+
+
 
 
 #endif //REVERSI_REMOTEPLAYER_H

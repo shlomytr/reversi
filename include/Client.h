@@ -8,12 +8,11 @@
 
 #include "Player.h"
 
-class Client : public Player {
+class Client  {
 public:
-    Client(GameLogic *l, const char *serverIP, int serverPort);
+    Client(const char *serverIP, int serverPort);
     void connectToServer();
-    int sendExercise(int arg1, char op, int arg2);
-    virtual void playOneTurn(bool blacksTurn) = 0;
+    int getClientSocket();
 
 protected:
     const char *serverIP;

@@ -48,7 +48,11 @@ void Game::playGame() {
         }
         blacksTurn = !blacksTurn;
     }
-
+    //if the game is online, then one of the players is a LocalPlayer (type=3). He should notify the server that the game ended.
+    if (black->getType()==3)
+        black->onlineEnd();
+    if (white->getType() ==3)
+        white->onlineEnd();
     printer->printsWhoWon(*board);
 }
 
@@ -58,6 +62,7 @@ bool Game::isGameNotOver() {
 
     return (!board->isFull() && (black->getCanPlay() || white->getCanPlay()));
 }
+
 
 
 

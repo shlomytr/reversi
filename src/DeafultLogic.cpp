@@ -26,7 +26,7 @@ bool DefaultLogic::possibleMoves(bool blacksTurn, int type, Printer *printer) {
                             }
         }
     }
-    if (thereArePosMoves && type == 1)
+    if (thereArePosMoves && (type == 1 || type ==3))
         printer->printPosMoves(*board);
     return thereArePosMoves;
 

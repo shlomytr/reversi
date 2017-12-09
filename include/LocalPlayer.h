@@ -9,10 +9,12 @@
 #include "Client.h"
 #include "HumanPlayer.h"
 
-class LocalPlayer : Client {
+class LocalPlayer : public Player {
 
 public:
-    LocalPlayer(GameLogic *l, const char *serverIP, int serverPort, HumanPlayer *player);
+
+
+    LocalPlayer(GameLogic *l, HumanPlayer *player, Client *client);
 
     virtual void playOneTurn(bool blacksTurn);
 
@@ -24,9 +26,13 @@ public:
 
     virtual void declareNoMoves();
 
+    virtual void onlineEnd();
+
+
 protected:
     HumanPlayer *player;
-
+    Client *client;
+    string intToString (int a);
 
 };
 

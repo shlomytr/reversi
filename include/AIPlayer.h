@@ -29,6 +29,9 @@ public:
 
     virtual void playOneTurn(bool blacksTurn);
 
+    virtual void onlineEnd();
+
+
 };
 
 
