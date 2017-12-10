@@ -13,18 +13,35 @@ class LocalPlayer : public Player {
 
 public:
 
+    /**
+     * @name : LocalPlayer
+     * @parameters : an instance of GameLogic, HumanPlayer and Client
+     * @return : the function creates a new instance of LocalPlayer
+     **/
 
     LocalPlayer(GameLogic *l, HumanPlayer *player, Client *client);
+
+    /**
+     * @name : playOneTurn
+     * @parameters : true if it is the black's player turn, false otherwise
+     * @return : the function use HumanPlayer's playOneMove function and then send it
+     **/
 
     virtual void playOneTurn(bool blacksTurn);
 
     /**
     * @name : DeclareNoMoves
     * @parameters : no parameters
-    * @return : the function notify that the player can't play
+    * @return : the function notify that the player can't play, and then send it to the server
     **/
 
     virtual void declareNoMoves();
+
+    /**
+     * @name : onlineEnd
+     * @parameters : no parameters
+     * @return : the function send a message to the server declaring that the current game has ended
+     **/
 
     virtual void onlineEnd();
 

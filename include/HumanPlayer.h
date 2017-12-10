@@ -29,6 +29,12 @@ public:
 
     virtual void playOneTurn(bool blacksTurn);
 
+    /**
+     * @name : onlineEnd
+     * @parameters : no parameters
+     * @return : the function does not do anything
+     **/
+
     virtual void onlineEnd();
 
 };

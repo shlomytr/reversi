@@ -40,14 +40,6 @@ public:
     Board (const Board &other);
 
     /**
-     * @name : printBoard
-     * @parameters : no parameters
-     * @return : the function prints the board
-     **/
-
-    void printBoard();
-
-    /**
      * @name : addToBTiles
      * @parameters : The amount to add to the number of the black tiles in the board
      * @return : the function adds i to bTiles

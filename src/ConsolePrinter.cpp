@@ -27,8 +27,9 @@ void ConsolePrinter::printLastMove(bool blacksTurn, int i, int j) {
 
 }
 
-void ConsolePrinter::printBoard(Board &b) {
-    cout << "The current board:\n";
+void ConsolePrinter::printBoard(Board &b, bool onlyPrintBoard) {
+    if (!onlyPrintBoard)
+        cout << "The current board:\n";
     int row = 1;
     string tmp(4*b.getBoardSize(),'-');
     cout << " | ";
@@ -41,12 +42,13 @@ void ConsolePrinter::printBoard(Board &b) {
             cout << b.getCell(i,j) << " | ";
         cout << "\n"<<tmp<<"--"<<"\n";
     }
-    cout << "The score is: Black = " << b.getBTiles() << "\tWhite = " << b.getWTiles() << endl;
+    if (!onlyPrintBoard)
+        cout << "The score is: Black = " << b.getBTiles() << "\tWhite = " << b.getWTiles() << endl;
 }
 
 void ConsolePrinter::printsWhoWon(Board &b) {
     cout << "The final board:\n";
-    b.printBoard();
+    printBoard(b,true);
     cout << "The game is finished! The final score is: Black = " << b.getBTiles() << "\tWhite = "
          << b.getWTiles() << endl;
     cout << "The winner is ";
