@@ -71,9 +71,6 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
 
 }
 
-
-
-
 int main() {
 
     Board board(4);
@@ -81,48 +78,26 @@ int main() {
     int port;
     char ip[9];
     ifstream objectFile("../clientConfig.txt");
+    if(!objectFile) {
+        cout << "Error reading network configuration file";
+        exit(-1);
+    }
     objectFile >> port >> ip ;
     objectFile.close();
+    try {
     Client client(ip, port);
     DefaultLogic logic = DefaultLogic(&board);
     HumanPlayer *humanPlayer = new HumanPlayer(&logic,&printer);
-           // HumanPlayer(&logic,&printer);
+    // HumanPlayer(&logic,&printer);
     pair <Player *, Player *> players = chooseGameMode(logic,board, printer, client,*humanPlayer);
     Game game(&board, players.first, players.second, &logic, &printer);
     game.playGame();
     delete(players.first);
     delete(players.second);
     delete(humanPlayer);
+    } catch (const char *msg) {
+        cout << "Error: " << msg << endl;
+        exit(-1);
+    }
     return 0;
 }
-
-
-/*
-    using namespace std;
-    int main() {
-        Client client(NULL, "127.0.0.1", 8000);
-        try {
-            client.connectToServer();
-        } catch (const char *msg) {
-            cout << "Failed to connect to server. Reason:" << msg << endl;
-            exit(-1);
-        }
-        int num1, num2;
-        char op;
-        int i = 0;
-        while (i<3) {
-            cout << "Enter an exercise (e.g., 15*19):";
-            cin >> num1 >> op >> num2;
-            cout << "Sending exercise: " << num1 << op
-                 << num2 << endl;
-            try {
-                int result = client.sendExercise(num1,
-                                                 op, num2);
-                cout << "Result: " << result << endl;
-            } catch (const char *msg) {
-                cout << "Failed to send exercise to server. Reason: " << msg << endl;
-            }
-            i++;
-        }
-    }
-*/
