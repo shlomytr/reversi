@@ -23,7 +23,7 @@ void Game::playGame() {
     bool notFirstTurn = false;
 
     while (isGameNotOver()) {
-        printer->printBoard(*board);
+        printer->printBoard(*board, false);
         if (blacksTurn) {
             if (notFirstTurn)
                 printer->printLastMove(blacksTurn, white->getLastMove().first, white->getLastMove()

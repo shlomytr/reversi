@@ -10,8 +10,29 @@
 
 class Client  {
 public:
+
+    /**
+     * @name : Client
+     * @parameters : the ip of the server and the number of the port
+     * @return : the function creates a new instance of Client
+     **/
+
     Client(const char *serverIP, int serverPort);
+
+    /**
+     * @name : connectToServer
+     * @parameters : no parameters
+     * @return : the function connects the client to the server
+     **/
+
     void connectToServer();
+
+    /**
+     * @name : getClientSocket
+     * @parameters : no parameters
+     * @return : the function returns the number of the socket
+     **/
+
     int getClientSocket();
 
 protected:

@@ -41,11 +41,12 @@ public:
 
     /**
      * @name : printBoard
-     * @parameters : the board that the game is played in
+     * @parameters : the board that the game is played in, and a boolean that
+     * is true if it is the last print or false otherwise
      * @return : the function prints the board
      **/
 
-    virtual void printBoard(Board &b);
+    virtual void printBoard(Board &b, bool onlyPrintBoard);
 
     /**
      * @name : printsWhoWon

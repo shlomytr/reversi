@@ -65,6 +65,12 @@ public:
 
     virtual void playOneTurn(bool blacksTurn) = 0;
 
+    /**
+     * @name : onlineEnd
+     * @parameters : no parameters
+     * @return : in LocalPlayer only the function sends a message to the server declaring that the current game has ended
+     **/
+
     virtual void onlineEnd() = 0;
 
 

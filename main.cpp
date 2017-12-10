@@ -71,9 +71,12 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
 
 }
 
+
+
+
 int main() {
 
-    Board board(4);
+    Board board(8);
     ConsolePrinter printer = ConsolePrinter();
     int port;
     char ip[9];

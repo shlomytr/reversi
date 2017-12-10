@@ -31,8 +31,6 @@ public:
 
     void playGame();
 
-
-
 private:
     Player *black;
     Player *white;
@@ -42,23 +40,12 @@ private:
     bool blacksTurn;
 
     /**
-     * @name : printNextTurn
-     * @parameters : no parameters
-     * @return : the function prints a message declaring who has the next turn
-     **/
-
-
-    /**
      * @name : isGameNotOver
      * @parameters : no parameters
      * @return : the function returns true if the game is over or not
      **/
 
     bool isGameNotOver();
-
-
-
-
 };
 
 
