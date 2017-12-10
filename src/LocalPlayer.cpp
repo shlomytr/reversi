@@ -32,8 +32,12 @@ void LocalPlayer::playOneTurn(bool blacksTurn) {
 
 void LocalPlayer::declareNoMoves() {
     player->declareNoMoves();
-    string message = "NoMove";
-    int n = write(client->getClientSocket(), &message, sizeof(message));
+    int x=-1;
+    int n = write(client->getClientSocket(), &x, sizeof(x));
+    if (n == -1) {
+        throw "Error writing 'NoMove' to socket";
+    }
+    n = write(client->getClientSocket(), &x, sizeof(x));
     if (n == -1) {
         throw "Error writing 'NoMove' to socket";
     }
@@ -46,10 +50,15 @@ string LocalPlayer::intToString(int a) {
 }
 
 void LocalPlayer::onlineEnd() {
-    string message = "End";
-    int n = write(client->getClientSocket(), &message, sizeof(message));
-    if (n == -1)
+    int x=-2;
+    int n = write(client->getClientSocket(), &x, sizeof(x));
+    if (n == -1) {
         throw "Error writing 'End' to socket";
+    }
+    n = write(client->getClientSocket(), &x, sizeof(x));
+    if (n == -1) {
+        throw "Error writing 'End' to socket";
+    }
 }
 
 
