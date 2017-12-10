@@ -12,13 +12,16 @@ RemotePlayer::RemotePlayer( GameLogic *l, Client *client) : Player(l) {
 }
 
 void RemotePlayer::playOneTurn(bool blacksTurn) {
-    static const int maxMove = 8;
-    char input[maxMove];
+    int row;
+    int col;
     cout<<"Waiting fot the other player's move...\n";
-    int n = read(client->getClientSocket(), &input, sizeof(input));
+    int r = read(client->getClientSocket(), &row, sizeof(row));
+    int c = read(client->getClientSocket(), &col, sizeof(col));
     //need to understand how to get the move for the server, cast it to int and then insert it in the board
-    cout<<input;
-
+    cout<< row << ", " << col << endl;
+    lastMove.first = row;
+    lastMove.second = col;
+    logic->move(blacksTurn, row, col);
 }
 
 void RemotePlayer::onlineEnd() {}

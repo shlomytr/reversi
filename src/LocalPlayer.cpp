@@ -19,15 +19,11 @@ void LocalPlayer::playOneTurn(bool blacksTurn) {
     player->playOneTurn(blacksTurn);
     lastMove.first = player->getLastMove().first;
     lastMove.second = player->getLastMove().second;
-    string move = intToString(lastMove.first);
-    move.append(" ");
-    move.append(intToString(lastMove.second));
-    int size = (int) move.size();
-    int n = write(client->getClientSocket(), &size, sizeof(size));
+    int n = write(client->getClientSocket(), &lastMove.first, sizeof(lastMove.first));
     if (n == -1) {
         throw "Error writing Move to socket";
     }
-    n = write(client->getClientSocket(), &move, sizeof(move));
+    n = write(client->getClientSocket(), &lastMove.second, sizeof(lastMove.first));
     if (n == -1) {
         throw "Error writing Move to socket";
     }
