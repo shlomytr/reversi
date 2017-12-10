@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <unistd.h>
+#include <fstream>
 #include "include/Board.h"
 #include "include/Game.h"
 #include "include/HumanPlayer.h"
@@ -75,9 +76,9 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
 
 int main() {
 
-    Board board(8);
+    Board board(4);
     ConsolePrinter printer = ConsolePrinter();
-    Client client("127.0.0.1", 8000);
+    Client client;
     DefaultLogic logic = DefaultLogic(&board);
     HumanPlayer *humanPlayer = new HumanPlayer(&logic,&printer);
            // HumanPlayer(&logic,&printer);
