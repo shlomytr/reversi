@@ -78,7 +78,12 @@ int main() {
 
     Board board(4);
     ConsolePrinter printer = ConsolePrinter();
-    Client client;
+    int port;
+    char ip[9];
+    ifstream objectFile("../clientConfig.txt");
+    objectFile >> port >> ip ;
+    objectFile.close();
+    Client client(ip, port);
     DefaultLogic logic = DefaultLogic(&board);
     HumanPlayer *humanPlayer = new HumanPlayer(&logic,&printer);
            // HumanPlayer(&logic,&printer);

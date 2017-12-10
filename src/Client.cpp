@@ -9,18 +9,10 @@
 #include <netdb.h>
 #include <string.h>
 #include <unistd.h>
-#include <fstream>
-
 using namespace std;
-Client::Client() : clientSocket(0) {
-    int port;
-    char ip[9];
-    ifstream objectFile("../clientConfig.txt");
-    objectFile >> port >> ip ;
-    objectFile.close();
-    char* p;
-    serverPort = port;
-    serverIP = ip;
+Client::Client(const char *serverIP, int serverPort) :
+         serverIP(serverIP), serverPort(serverPort), clientSocket(0) {
+
     //cout << "Client" << endl;
 }
 void Client::connectToServer() {
