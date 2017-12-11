@@ -6,22 +6,22 @@
 #include "../include/DeafultLogic.h"
 #include "../include/HumanPlayer.h"
 #include "../include/AIPlayer.h"
+#include "../include/ConsolePrinter.h"
 
 TEST(humanPlayerTest, sanityCheak) {
-    Board board;
+    Board board(8);
+    ConsolePrinter printer;
     DefaultLogic logic = DefaultLogic(&board);
-    HumanPlayer player = HumanPlayer(&logic);
-    player.setCanPlay(true);
+    HumanPlayer player = HumanPlayer(&logic, &printer);
     ASSERT_TRUE(player.getCanPlay());
     ASSERT_EQ(player.getType(),1);
 
 }
 
 TEST(AIPlayerTest, sanityCheak) {
-    Board board;
+    Board board(8);
     DefaultLogic logic = DefaultLogic(&board);
     AIPlayer player = AIPlayer(&logic, &board);
-    player.setCanPlay(true);
     ASSERT_TRUE(player.getCanPlay());
     ASSERT_EQ(player.getType(),2);
 }

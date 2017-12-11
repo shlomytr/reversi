@@ -91,13 +91,13 @@ int main() {
     Client client(ip, port);
     DefaultLogic logic = DefaultLogic(&board);
     HumanPlayer *humanPlayer = new HumanPlayer(&logic,&printer);
-    // HumanPlayer(&logic,&printer);
     pair <Player *, Player *> players = chooseGameMode(logic,board, printer, client,*humanPlayer);
     Game game(&board, players.first, players.second, &logic, &printer);
     game.playGame();
     delete(players.first);
     delete(players.second);
-    delete(humanPlayer);
+    if(players.first->getType() == 3 || players.second->getType() == 3)
+        delete(humanPlayer);
     } catch (const char *msg) {
         cout << "Error: " << msg << endl;
         exit(-1);

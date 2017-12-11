@@ -7,7 +7,7 @@
 
 
 TEST(BoardTest, initializationCheak) {
-    Board board;
+    Board board(8);
     EXPECT_EQ(board.getBTiles(),2);
     EXPECT_EQ(board.getWTiles(),2);
     EXPECT_EQ(board.getCell(3,3),'o');
@@ -18,15 +18,15 @@ TEST(BoardTest, initializationCheak) {
 }
 
 TEST(BoardTest, boardAdgasments) {
-    Board board;
+    Board board(8);
     board.setPosCell(3,3,true);
-    board.setCell(1,1,'x');
+    board.setCell(1,1,board.black);
     board.addToBTiles(1);
     ASSERT_TRUE(board.getPosCell(3,3));
     ASSERT_EQ(board.getCell(1,1),'x');
     EXPECT_EQ(board.getBTiles(),3);
     for (int i = 0; i < board.getBoardSize(); i++)
         for (int j = 0; j < board.getBoardSize(); j++)
-            board.setCell(i,j,'x');
+            board.setCell(i,j,board.black);
     ASSERT_TRUE(board.isFull());
 }

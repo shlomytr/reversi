@@ -4,8 +4,6 @@
 
 #include "../include/ConsolePrinter.h"
 
-ConsolePrinter::ConsolePrinter() = default;
-
 void ConsolePrinter::printNextTurn(bool blacksTurn) {
     if (blacksTurn)
         cout << "The next move - Player x:\n\n";

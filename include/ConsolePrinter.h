@@ -12,9 +12,6 @@ class ConsolePrinter : public Printer {
 
 public:
 
-    ConsolePrinter();
-
-
     /**
      * @name : printNextTurn
      * @parameters : no parameters
