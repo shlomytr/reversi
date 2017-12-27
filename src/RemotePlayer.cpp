@@ -4,6 +4,7 @@
 
 #include <unistd.h>
 #include <cstdlib>
+#include <cstring>
 #include "../include/RemotePlayer.h"
 
 
@@ -25,8 +26,10 @@ void RemotePlayer::playOneTurn(bool blacksTurn) {
     if (r == -1) {
         throw "Error reading the size of the move";
     }
-    row = atoi(reinterpret_cast<const char *>(input[0]));
-    col = atoi(reinterpret_cast<const char *>(input[2]));    cout<< row << ", " << col << endl;
+    cout << input;
+    row = atoi(strtok(reinterpret_cast<char *>(&input), " "));
+    col = atoi(strtok(NULL, " "));
+    cout<< row << ", " << col << endl;
     lastMove.first = row;
     lastMove.second = col;
     logic->move(blacksTurn, row, col);
