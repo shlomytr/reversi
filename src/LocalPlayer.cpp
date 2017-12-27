@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <cstdlib>
 #include <sstream>
+#include <cstring>
 #include "../include/LocalPlayer.h"
 
 LocalPlayer::LocalPlayer( GameLogic *l, HumanPlayer *player, Client *client) : Player(l) {
@@ -19,28 +20,15 @@ void LocalPlayer::playOneTurn(bool blacksTurn) {
     player->playOneTurn(blacksTurn);
     lastMove.first = player->getLastMove().first;
     lastMove.second = player->getLastMove().second;
-    int n = write(client->getClientSocket(), &lastMove.first, sizeof(lastMove.first));
-    if (n == -1) {
-        throw "Error writing Move to socket";
-    }
-    n = write(client->getClientSocket(), &lastMove.second, sizeof(lastMove.first));
-    if (n == -1) {
-        throw "Error writing Move to socket";
-    }
-
+    string move = intToString(lastMove.first);
+    move.append(" ");
+    move.append(intToString(lastMove.second));
+    sendToServer(move);
 }
 
 void LocalPlayer::declareNoMoves() {
     player->declareNoMoves();
-    int x=-1;
-    int n = write(client->getClientSocket(), &x, sizeof(x));
-    if (n == -1) {
-        throw "Error writing 'NoMove' to socket";
-    }
-    n = write(client->getClientSocket(), &x, sizeof(x));
-    if (n == -1) {
-        throw "Error writing 'NoMove' to socket";
-    }
+    sendToServer("NoMove");
 }
 
 string LocalPlayer::intToString(int a) {
@@ -50,15 +38,24 @@ string LocalPlayer::intToString(int a) {
 }
 
 void LocalPlayer::onlineEnd() {
-    int x=-2;
-    int n = write(client->getClientSocket(), &x, sizeof(x));
-    if (n == -1) {
-        throw "Error writing 'End' to socket";
-    }
-    n = write(client->getClientSocket(), &x, sizeof(x));
-    if (n == -1) {
-        throw "Error writing 'End' to socket";
-    }
+    sendToServer("End");
 }
+
+void LocalPlayer::sendToServer(string m) {
+    int size= (int) m.size();
+    char message[size];
+    strcpy(message,m.c_str());
+    int n = write(client->getClientSocket(), &size, sizeof(size));
+    if (n == -1) {
+        throw "Error writing size to socket";
+    }
+    n = write(client->getClientSocket(), &message, sizeof(message));
+    if (n == -1) {
+        throw "Error writing Move to socket";
+    }
+
+}
+
+
 
 

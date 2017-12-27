@@ -51,6 +51,8 @@ protected:
     Client *client;
     string intToString (int a);
 
+    void sendToServer(string message);
+
 };
 
 
