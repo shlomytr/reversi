@@ -26,16 +26,11 @@ void RemotePlayer::playOneTurn(bool blacksTurn) {
     if (r == -1) {
         throw "Error reading the size of the move";
     }
-    cout << input;
     row = atoi(strtok(reinterpret_cast<char *>(&input), " "));
     col = atoi(strtok(NULL, " "));
-    cout<< row << ", " << col << endl;
     lastMove.first = row;
     lastMove.second = col;
     logic->move(blacksTurn, row, col);
 }
 
 void RemotePlayer::onlineEnd() {}
-
-
-
