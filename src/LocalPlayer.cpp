@@ -28,6 +28,7 @@ void LocalPlayer::playOneTurn(bool blacksTurn) {
 
 void LocalPlayer::declareNoMoves() {
     player->declareNoMoves();
+    this->canPlay=false;
     sendToServer("NoMove");
 }
 
