@@ -14,12 +14,13 @@
 #include "include/AIPlayer.h"
 #include "include/ConsolePrinter.h"
 #include "include/Client.h"
-
+#include "include/LocalPlayer.h"
+#include "include/RemotePlayer.h"
 
 
 using namespace std;
 
-void sendToServer (pair <Player *,Player *> players, Client &c) {
+void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board, Client &c, HumanPlayer &h) {
     cout << "Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
             "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
     string m;
@@ -36,19 +37,19 @@ void sendToServer (pair <Player *,Player *> players, Client &c) {
             size = (int) m.size();
             strcpy(message, m.c_str());
         }
-        int sizeRec = 0;
+        int intRec = 0;
         int n = write(c.getClientSocket(), message, sizeof(message));
         if (n == -1) {
             cout << "Error writing the the message to the server";
             exit(-1);
         }
         if (strcmp(message, "list_games") == 0) {
-            n = read(c.getClientSocket(), &sizeRec, sizeof(sizeRec));
+            n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
                 cout << "Error reading the size of the message from the server";
                 exit(-1);
             }
-            char input[sizeRec];
+            char input[intRec];
             n = read(c.getClientSocket(), &input, sizeof(input));
             if (n == -1) {
                 cout << "Error reading the message from the server";
@@ -56,8 +57,22 @@ void sendToServer (pair <Player *,Player *> players, Client &c) {
             }
             cout << input << endl;
         }
+        if (strncmp(message, "start", sizeof("start")) == 0){
+            n = read(c.getClientSocket(), &intRec, sizeof(intRec));
+            if (n == -1) {
+                cout << "Error reading the size of the message from the server";
+                exit(-1);
+            }
+            if (intRec==1){
+                LocalPlayer *b = new LocalPlayer(&l,&h,&c);
+                RemotePlayer *w = new RemotePlayer(&l,&c);
+                players.first=b;
+                players.second=w;
+                stopped = !stopped;
+            }
+            else break;
+        }
 
-        stopped = !stopped;
     }
 }
 
@@ -87,7 +102,7 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
                 cout << "Failed to connect to server. Reason:" << msg << endl;
                 exit(-1);
             }
-    sendToServer(players,c);
+    sendToServer(players,l,board,c,h);
 
 
 //            cout<<"Waiting for the other player to connect...\n";
@@ -99,10 +114,7 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
 //                exit (-1);
 //            }
 //            if (order==1){
-//                LocalPlayer *b = new LocalPlayer(&l,&h,&c);
-//                RemotePlayer *w = new RemotePlayer(&l,&c);
-//                players.first=b;
-//                players.second=w;
+
 //            }
 //            if (order==2){
 //                RemotePlayer *b =new RemotePlayer(&l,&c);
