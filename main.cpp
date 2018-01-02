@@ -50,13 +50,18 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 exit(-1);
             }
             char input[intRec];
+            if(intRec) {
+            char input[intRec];
             n = read(c.getClientSocket(), &input, sizeof(input));
             if (n == -1) {
                 cout << "Error reading the message from the server";
                 exit(-1);
             }
             cout << input << endl;
+            } else
+                cout << "No available rooms, press \"start\" to make new one" << endl;
         }
+//        stopped = !stopped;
         if (strncmp(message, "start", sizeof("start")) == 0){
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
