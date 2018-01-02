@@ -26,14 +26,15 @@ void sendToServer (pair <Player *,Player *> players, Client &c) {
     cin >> m;
     int size = (int) m.size();
     char message[size];
+    strcpy(message, m.c_str());
     bool stopped = false;
     while (!stopped) {
         while (strncmp(message, "start", sizeof("start")) != 0 && strncmp(message, "join", sizeof("join")) != 0
                && strcmp(message, "list_games") != 0) {
-            cout << "Invalid input. Please try again";
+            cout << "Invalid input. Please try again\n";
             cin >> m;
             size = (int) m.size();
-            message[size];
+            strcpy(message, m.c_str());
         }
         int sizeRec = 0;
         int n = write(c.getClientSocket(), message, sizeof(message));
@@ -86,7 +87,7 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
                 cout << "Failed to connect to server. Reason:" << msg << endl;
                 exit(-1);
             }
-
+    sendToServer(players,c);
 
 
 //            cout<<"Waiting for the other player to connect...\n";
