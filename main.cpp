@@ -23,11 +23,16 @@ using namespace std;
 void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board, Client &c, HumanPlayer &h) {
     cout << "Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
             "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
+
     string m;
-    cin >> m;
+    cin.ignore();
+    getline(cin,m);
     int size = (int) m.size();
     char message[size];
     strcpy(message, m.c_str());
+    cout<<m<<endl;
+    cout<<m.c_str()<<endl;
+    cout<<message<<endl;
     bool stopped = false;
     while (!stopped) {
         while (strncmp(message, "start", sizeof("start")) != 0 && strncmp(message, "join", sizeof("join")) != 0
@@ -36,6 +41,12 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
             cin >> m;
             size = (int) m.size();
             strcpy(message, m.c_str());
+        }
+        try {
+            c.connectToServer();
+        } catch (const char *msg) {
+            cout << "Failed to connect to server. Reason:" << msg << endl;
+            exit(-1);
         }
         int intRec = 0;
         int n = write(c.getClientSocket(), message, sizeof(message));
@@ -49,7 +60,6 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 cout << "Error reading the size of the message from the server";
                 exit(-1);
             }
-            char input[intRec];
             if(intRec) {
             char input[intRec];
             n = read(c.getClientSocket(), &input, sizeof(input));
@@ -60,6 +70,9 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
             cout << input << endl;
             } else
                 cout << "No available rooms, press \"start\" to make new one" << endl;
+            cin >> m;
+            size = (int) m.size();
+            strcpy(message, m.c_str());
         }
 
         if (strncmp(message, "start", sizeof("start")) == 0){
@@ -118,12 +131,12 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
         }
 
         else if (ans == 3){
-            try {
-                c.connectToServer();
-            } catch (const char *msg) {
-                cout << "Failed to connect to server. Reason:" << msg << endl;
-                exit(-1);
-            }
+//            try {
+//                c.connectToServer();
+//            } catch (const char *msg) {
+//                cout << "Failed to connect to server. Reason:" << msg << endl;
+//                exit(-1);
+//            }
     sendToServer(players,l,board,c,h);
 
 
