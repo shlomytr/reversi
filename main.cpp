@@ -48,6 +48,7 @@ void sendToServer (pair <Player *,Player *> players, Client &c) {
                 cout << "Error reading the size of the message from the server";
                 exit(-1);
             }
+            if(sizeRec) {
             char input[sizeRec];
             n = read(c.getClientSocket(), &input, sizeof(input));
             if (n == -1) {
@@ -55,9 +56,10 @@ void sendToServer (pair <Player *,Player *> players, Client &c) {
                 exit(-1);
             }
             cout << input << endl;
+            } else
+                cout << "No available rooms, press \"start\" to make new one" << endl;
         }
-
-        stopped = !stopped;
+//        stopped = !stopped;
     }
 }
 
