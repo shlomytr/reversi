@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <fstream>
 #include <cstring>
+#include <sstream>
 #include "include/Board.h"
 #include "include/Game.h"
 #include "include/HumanPlayer.h"
@@ -24,23 +25,23 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
     cout << "Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
             "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
 
-    string m;
+    string message;
     cin.ignore();
-    getline(cin,m);
-    int size = (int) m.size();
-    char message[size];
-    strcpy(message, m.c_str());
-    cout<<m<<endl;
-    cout<<m.c_str()<<endl;
-    cout<<message<<endl;
+    getline(cin,message);
+    int size = (int) message.size();
+    istringstream iss(message);
+    string command;
+    iss >> command;
+    cout << command << endl;
     bool stopped = false;
     while (!stopped) {
-        while (strncmp(message, "start", sizeof("start")) != 0 && strncmp(message, "join", sizeof("join")) != 0
-               && strcmp(message, "list_games") != 0) {
+        while (command != "start" && command != "join" && command != "list_games") {
             cout << "Invalid input. Please try again\n";
-            cin >> m;
-            size = (int) m.size();
-            strcpy(message, m.c_str());
+            iss.clear();
+            iss.str(command);
+            getline(cin,message);
+            size = (int) message.size();
+            iss >> command;
         }
         try {
             c.connectToServer();
@@ -49,20 +50,21 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
             exit(-1);
         }
         int intRec = 0;
-        int n = write(c.getClientSocket(), message, sizeof(message));
+        int n = write(c.getClientSocket(), message.c_str(), sizeof(message));
         if (n == -1) {
             cout << "Error writing the the message to the server";
             exit(-1);
         }
-        if (strcmp(message, "list_games") == 0) {
+        if (command == "list_games") {
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
                 cout << "Error reading the size of the message from the server";
                 exit(-1);
             }
             if(intRec) {
-            char input[intRec];
-            n = read(c.getClientSocket(), &input, sizeof(input));
+                char input[intRec];
+                bzero((char *)input, intRec*sizeof(char));
+                n = read(c.getClientSocket(), &input, sizeof(input));
             if (n == -1) {
                 cout << "Error reading the message from the server";
                 exit(-1);
@@ -70,12 +72,12 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
             cout << input << endl;
             } else
                 cout << "No available rooms, press \"start\" to make new one" << endl;
-            cin >> m;
-            size = (int) m.size();
-            strcpy(message, m.c_str());
+            getline(cin,message);
+            size = (int) message.size();
+            iss >> command;
         }
 
-        if (strncmp(message, "start", sizeof("start")) == 0){
+        if (command == "start"){
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
                 cout << "Error reading the size of the message from the server";
@@ -89,10 +91,13 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 stopped = !stopped;
                 cout<<"Waiting for the other player to connect...\n";
             }
-            else break;
+            else if (intRec==-1){
+                cout<<"This game is full, please chose other game or create new" << endl;
+                command.clear();
+            };
         }
 
-        if (strncmp(message, "join", sizeof("join")) == 0){
+        if (command == "join"){
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
                 cout << "Error reading the size of the message from the server";
