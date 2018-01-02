@@ -74,6 +74,7 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 players.first=b;
                 players.second=w;
                 stopped = !stopped;
+                cout<<"Waiting for the other player to connect...\n";
             }
             else break;
         }
