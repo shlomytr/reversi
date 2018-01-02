@@ -29,19 +29,17 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
     cin.ignore();
     getline(cin,message);
     int size = (int) message.size();
-    istringstream iss(message);
     string command;
-    iss >> command;
+    command =  message.substr(0, message.find(" "));
     cout << command << endl;
     bool stopped = false;
     while (!stopped) {
         while (command != "start" && command != "join" && command != "list_games") {
             cout << "Invalid input. Please try again\n";
-            iss.clear();
-            iss.str(command);
+
             getline(cin,message);
             size = (int) message.size();
-            iss >> command;
+            command =  message.substr(0, message.find(" "));
         }
         try {
             c.connectToServer();
@@ -74,7 +72,7 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 cout << "No available rooms, press \"start\" to make new one" << endl;
             getline(cin,message);
             size = (int) message.size();
-            iss >> command;
+            command =  message.substr(0, message.find(" "));
         }
 
         if (command == "start"){
