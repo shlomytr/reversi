@@ -61,7 +61,7 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
             } else
                 cout << "No available rooms, press \"start\" to make new one" << endl;
         }
-//        stopped = !stopped;
+
         if (strncmp(message, "start", sizeof("start")) == 0){
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
@@ -71,6 +71,22 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
             if (intRec==1){
                 LocalPlayer *b = new LocalPlayer(&l,&h,&c);
                 RemotePlayer *w = new RemotePlayer(&l,&c);
+                players.first=b;
+                players.second=w;
+                stopped = !stopped;
+            }
+            else break;
+        }
+
+        if (strncmp(message, "join", sizeof("join")) == 0){
+            n = read(c.getClientSocket(), &intRec, sizeof(intRec));
+            if (n == -1) {
+                cout << "Error reading the size of the message from the server";
+                exit(-1);
+            }
+            if (intRec==2){
+                RemotePlayer *b =new RemotePlayer(&l,&c);
+                LocalPlayer *w =new LocalPlayer(&l,&h,&c);
                 players.first=b;
                 players.second=w;
                 stopped = !stopped;
