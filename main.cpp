@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <fstream>
+#include <cstring>
 #include "include/Board.h"
 #include "include/Game.h"
 #include "include/HumanPlayer.h"
@@ -13,11 +14,50 @@
 #include "include/AIPlayer.h"
 #include "include/ConsolePrinter.h"
 #include "include/Client.h"
-#include "include/LocalPlayer.h"
-#include "include/RemotePlayer.h"
+
 
 
 using namespace std;
+
+void sendToServer (pair <Player *,Player *> players, Client &c){
+    cout<<"Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
+            "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
+    string m;
+    cin>>m;
+    int size= (int) m.size();
+    char message [size];
+    bool stopped = false;
+    while(!stopped){
+        while (strncmp(message,"start", sizeof("start")) !=0  && strncmp(message,"join", sizeof("join")) !=0
+               && strcmp(message, "list_games") != 0){
+            cout<<"Invalid input. Please try again";
+            cin>>m;
+            size= (int) m.size();
+            message [size];
+        }
+        int sizeRec = 0;
+        int n = write(c.getClientSocket(), message, sizeof(message));
+        if(n == -1) {
+            cout << "Error writing the the message to the server";
+            exit (-1);
+    }
+        if (strcmp(message, "list_games") == 0) {
+            n = read(c.getClientSocket(), &sizeRec, sizeof(sizeRec));
+            if(n == -1) {
+                cout << "Error reading the size of the message from the server";
+                exit(-1);
+            }
+            char input [sizeRec];
+            n= read(c.getClientSocket(), &input, sizeof(input) );
+            if(n == -1) {
+                cout << "Error reading the message from the server";
+                exit(-1);
+            }
+            cout<<input<<endl;
+        }
+
+    stopped=!stopped;
+}
 
 
 pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p, Client &c, HumanPlayer &h) {
@@ -46,26 +86,29 @@ pair <Player *,Player *>  chooseGameMode(GameLogic &l, Board &board, Printer &p,
                 cout << "Failed to connect to server. Reason:" << msg << endl;
                 exit(-1);
             }
-            cout<<"Waiting for the other player to connect...\n";
-            int order;
-        //connect to server and gets 1 for black and 2 for white into order
-            int n = read(c.getClientSocket(), &order, sizeof(int));
-            if(n == -1) {
-                cout << "Error reading the turn of the player";
-                exit (-1);
-            }
-            if (order==1){
-                LocalPlayer *b = new LocalPlayer(&l,&h,&c);
-                RemotePlayer *w = new RemotePlayer(&l,&c);
-                players.first=b;
-                players.second=w;
-            }
-            if (order==2){
-                RemotePlayer *b =new RemotePlayer(&l,&c);
-                LocalPlayer *w =new LocalPlayer(&l,&h,&c);
-                players.first=b;
-                players.second=w;
-            }
+
+
+
+//            cout<<"Waiting for the other player to connect...\n";
+//            int order;
+//        //connect to server and gets 1 for black and 2 for white into order
+//            int n = read(c.getClientSocket(), &order, sizeof(int));
+//            if(n == -1) {
+//                cout << "Error reading the turn of the player";
+//                exit (-1);
+//            }
+//            if (order==1){
+//                LocalPlayer *b = new LocalPlayer(&l,&h,&c);
+//                RemotePlayer *w = new RemotePlayer(&l,&c);
+//                players.first=b;
+//                players.second=w;
+//            }
+//            if (order==2){
+//                RemotePlayer *b =new RemotePlayer(&l,&c);
+//                LocalPlayer *w =new LocalPlayer(&l,&h,&c);
+//                players.first=b;
+//                players.second=w;
+//            }
         }
     return players;
 
