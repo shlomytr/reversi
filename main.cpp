@@ -22,24 +22,26 @@
 using namespace std;
 
 void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board, Client &c, HumanPlayer &h) {
-    cout << "Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
-            "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
+    cout
+            << "Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
+                    "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
 
     string message;
     cin.ignore();
-    getline(cin,message);
+    getline(cin, message);
     int size = (int) message.size();
     string command;
-    command =  message.substr(0, message.find(" "));
+    command = message.substr(0, message.find(" "));
     cout << command << endl;
     bool stopped = false;
     while (!stopped) {
-        while (command != "start" && command != "join" && command != "list_games") {
+        while (command != "start" && command != "join" &&
+               command != "list_games") {
             cout << "Invalid input. Please try again\n";
 
-            getline(cin,message);
+            getline(cin, message);
             size = (int) message.size();
-            command =  message.substr(0, message.find(" "));
+            command = message.substr(0, message.find(" "));
         }
         try {
             c.connectToServer();
@@ -59,58 +61,63 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 cout << "Error reading the size of the message from the server";
                 exit(-1);
             }
-            if(intRec) {
+            if (intRec) {
                 char input[intRec];
-                bzero((char *)input, intRec*sizeof(char));
+                bzero((char *) input, intRec * sizeof(char));
                 n = read(c.getClientSocket(), &input, sizeof(input));
-            if (n == -1) {
-                cout << "Error reading the message from the server";
-                exit(-1);
-            }
-            cout << input << endl;
+                if (n == -1) {
+                    cout << "Error reading the message from the server";
+                    exit(-1);
+                }
+                cout << input << endl;
             } else
-                cout << "No available rooms, press \"start\" to make new one" << endl;
-            getline(cin,message);
+                cout << "No available rooms, press \"start\" to make new one"
+                     << endl;
+            getline(cin, message);
             size = (int) message.size();
-            command =  message.substr(0, message.find(" "));
+            command = message.substr(0, message.find(" "));
         }
 
-        if (command == "start"){
-            cout<<"Trying to connect to the room...\n";
+        if (command == "start") {
+            cout << "Trying to connect to the room...\n";
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
                 cout << "Error reading the size of the message from the server";
                 exit(-1);
             }
-            if (intRec==1){
-                LocalPlayer *b = new LocalPlayer(&l,&h,&c);
-                RemotePlayer *w = new RemotePlayer(&l,&c);
-                players.first=b;
-                players.second=w;
+            if (intRec == 1) {
+                LocalPlayer *b = new LocalPlayer(&l, &h, &c);
+                RemotePlayer *w = new RemotePlayer(&l, &c);
+                players.first = b;
+                players.second = w;
                 stopped = !stopped;
-            }
-            else if (intRec==-1){
-                cout<<"This room is full, please chose other game or create new" << endl;
+            } else if (intRec == -1) {
+                cout
+                        << "This room is full, please chose other game or create new"
+                        << endl;
                 command.clear();
             };
         }
 
-        if (command == "join"){
+        if (command == "join") {
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
                 cout << "Error reading the size of the message from the server";
                 exit(-1);
             }
-            if (intRec==2){
-                RemotePlayer *b =new RemotePlayer(&l,&c);
-                LocalPlayer *w =new LocalPlayer(&l,&h,&c);
-                players.first=b;
-                players.second=w;
+            if (intRec == 2) {
+                RemotePlayer *b = new RemotePlayer(&l, &c);
+                LocalPlayer *w = new LocalPlayer(&l, &h, &c);
+                players.first = b;
+                players.second = w;
                 stopped = !stopped;
+            } else if (intRec == -1) {
+                cout
+                        << "The room is full, for available room please check our room_list"
+                        << endl;
             }
-            else break;
-        }
 
+        }
     }
 }
 
