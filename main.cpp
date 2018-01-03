@@ -67,12 +67,14 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 cout << "Error reading the message from the server";
                 exit(-1);
             }
+            //prints the list of games
             cout << input << endl;
+            command =  "";
             } else
                 cout << "No available rooms, press \"start\" to make new one" << endl;
-            getline(cin,message);
-            size = (int) message.size();
-            command =  message.substr(0, message.find(" "));
+//            getline(cin,message);
+//            size = (int) message.size();
+            command =  "";
         }
 
         if (command == "start"){
