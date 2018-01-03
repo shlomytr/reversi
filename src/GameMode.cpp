@@ -70,7 +70,7 @@ void GameMode::sendToServer (pair <Player *,Player *> &players, GameLogic &l, Bo
                     players.second = w;
                     stopped = !stopped;
                 } else if (intRec == -1) {
-                    cout << "This room is full, please chose other game or create new" << endl;
+                    cout << "There is already a room with a name like this, please choose other name or join an available game" << endl;
                     command.clear();
                 };
                 break;
