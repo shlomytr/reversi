@@ -76,6 +76,7 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
         }
 
         if (command == "start"){
+            cout<<"Trying to connect to the room...\n";
             n = read(c.getClientSocket(), &intRec, sizeof(intRec));
             if (n == -1) {
                 cout << "Error reading the size of the message from the server";
@@ -87,10 +88,9 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                 players.first=b;
                 players.second=w;
                 stopped = !stopped;
-                cout<<"Waiting for the other player to connect...\n";
             }
             else if (intRec==-1){
-                cout<<"This game is full, please chose other game or create new" << endl;
+                cout<<"This room is full, please chose other game or create new" << endl;
                 command.clear();
             };
         }
