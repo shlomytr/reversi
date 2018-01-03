@@ -22,9 +22,8 @@
 using namespace std;
 
 void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board, Client &c, HumanPlayer &h) {
-    cout
-            << "Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
-                    "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
+    cout << "Please choose one of the following:\n'start <name>' to start a game with a name of 'name'\n"
+            "'list_games' to get the current joinable games\n'join <name>' to join a game with a name of 'name'\n";
 
     string message;
     cin.ignore();
@@ -63,19 +62,20 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
             }
             if (intRec) {
                 char input[intRec];
-                bzero((char *) input, intRec * sizeof(char));
+                bzero((char *)input, intRec*sizeof(char));
                 n = read(c.getClientSocket(), &input, sizeof(input));
-                if (n == -1) {
-                    cout << "Error reading the message from the server";
-                    exit(-1);
-                }
-                cout << input << endl;
+            if (n == -1) {
+                cout << "Error reading the message from the server";
+                exit(-1);
+            }
+            //prints the list of games
+            cout << input << endl;
+            command =  "";
             } else
-                cout << "No available rooms, press \"start\" to make new one"
-                     << endl;
-            getline(cin, message);
-            size = (int) message.size();
-            command = message.substr(0, message.find(" "));
+                cout << "No available rooms, press \"start\" to make new one" << endl;
+//            getline(cin,message);
+//            size = (int) message.size();
+            command =  "";
         }
 
         if (command == "start") {
@@ -116,8 +116,9 @@ void sendToServer (pair <Player *,Player *> &players, GameLogic &l, Board &board
                         << "The room is full, for available room please check our room_list"
                         << endl;
             }
-
+            else break;
         }
+
     }
 }
 
